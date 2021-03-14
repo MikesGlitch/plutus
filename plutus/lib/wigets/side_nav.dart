@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:plutus/src/screens/budget_screen.dart';
+import 'package:plutus/src/screens/reports_screen.dart';
+import 'package:plutus/src/utils/navigation.dart';
 
 class SideNav extends StatelessWidget {
   SideNav({Key key}) : super(key: key);
@@ -26,7 +29,9 @@ class SideNav extends StatelessWidget {
             title: Text('Budget'),
             onTap: () {
               // change app state...
-              Navigator.pushNamed(context, '/');
+              // Navigator.pushNamed(context, '/');
+              Navigator.of(context)
+                  .push(navigateToScreenNoAnimation(BudgetScreen()));
               // Navigator.pop(context); // close the drawer
             },
           ),
@@ -35,7 +40,10 @@ class SideNav extends StatelessWidget {
             title: Text('Reports'),
             onTap: () {
               // change app state...
-              Navigator.pushNamed(context, '/reports');
+              // Navigator.pushNamed(context, '/reports');
+
+              Navigator.of(context)
+                  .push(navigateToScreenNoAnimation(ReportsScreen()));
               // Navigator.pop(context); // close the drawer
             },
           ),

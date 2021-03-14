@@ -9,8 +9,8 @@ class ReportsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text(title)),
-        drawer: SideNav(),
-        body: Center(child: Text('Reports go here')));
+        // appBar: AppBar(title: Text(title)),
+        // drawer: SideNav(),
+        body: Row(children: [SideNav(), Text('Reports go here')]));
   }
 }
