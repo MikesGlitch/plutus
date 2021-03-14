@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:plutus/src/screens/reports_screen.dart';
-import 'package:plutus/src/utils/navigation.dart';
 import 'package:plutus/wigets/month_overview.dart';
 import 'package:plutus/wigets/side_nav.dart';
 
@@ -36,27 +34,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
     }
 
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(widget.title),
-      //   actions: [
-      //     IconButton(
-      //       icon: const Icon(Icons.logout),
-      //       tooltip: 'Logout',
-      //       onPressed: () {
-      //         ScaffoldMessenger.of(context)
-      //             .showSnackBar(const SnackBar(content: Text('Logout...')));
-      //       },
-      //     ),
-      //   ],
-      // ),
-      // Open issue for sidebar to remain open - https://github.com/flutter/flutter/issues/50276
-      // drawerEnableOpenDragGesture: false,
-      // endDrawerEnableOpenDragGesture: false,
-      // drawer: SideNav(),
-      body:
-
-          // Column(children: [
-          Row(
+      body: Row(
         children: [
           SideNav(),
           Expanded(
