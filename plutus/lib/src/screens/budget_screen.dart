@@ -11,14 +11,6 @@ class BudgetScreen extends StatefulWidget {
 }
 
 class _BudgetScreenState extends State<BudgetScreen> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     var months = ['January', 'February', 'March', 'April'];
@@ -39,35 +31,25 @@ class _BudgetScreenState extends State<BudgetScreen> {
           SideNav(),
           Expanded(
               child: Container(
-                  color: Colors.lightBlue,
                   child: Column(
-                    children: [
-                      Row(
-                        children: [...monthlyBudgetColumns],
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            'Dart packages are here: https://pub.dev/',
-                          ),
-                          Text(
-                            'You have pushed the button this many times:',
-                          ),
-                          Text(
-                            '$_counter',
-                            style: Theme.of(context).textTheme.headline4,
-                          ),
-                        ],
-                      ),
-                    ],
-                  )))
+            children: [
+              Row(
+                children: [...monthlyBudgetColumns],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Dart packages are here: https://pub.dev/',
+                  ),
+                  Text(
+                    'You have pushed the button this many times:',
+                  ),
+                ],
+              ),
+            ],
+          )))
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
       ),
     );
   }
