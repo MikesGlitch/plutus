@@ -13,16 +13,59 @@ class BudgetScreen extends StatefulWidget {
 class _BudgetScreenState extends State<BudgetScreen> {
   @override
   Widget build(BuildContext context) {
-    var months = ['January', 'February', 'March', 'April'];
+    var months = ['January' /*, 'February', 'March', 'April'*/];
     var monthlyBudgetColumns = [];
     for (var month in months) {
-      monthlyBudgetColumns.add(Column(
-        children: [
-          MonthOverview(
-            monthText: month,
-          ),
-        ],
-      ));
+      var budgetCategories = [
+        'Food shopping',
+        'Spending money',
+        'Council tax',
+        'Utility bills',
+        'Internet bills'
+      ];
+
+      var budgetCategorySpendingRows = [];
+      for (var budgetCategory in budgetCategories) {
+        budgetCategorySpendingRows.add(Row(
+          children: [
+            Expanded(
+                child: TextFormField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+              ),
+            )),
+            Expanded(
+                child: TextFormField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+              ),
+            )),
+            Expanded(
+                child: TextFormField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+              ),
+            )),
+          ],
+        ));
+      }
+
+      monthlyBudgetColumns.add(Expanded(
+          child: Container(
+              margin: const EdgeInsets.all(6),
+              child: Column(
+                children: [
+                  MonthOverview(
+                    monthText: month,
+                  ),
+                  Row(children: [
+                    Expanded(child: Text("Budget")),
+                    Expanded(child: Text("Outflow")),
+                    Expanded(child: Text("Balance"))
+                  ]),
+                  ...budgetCategorySpendingRows
+                ],
+              ))));
     }
 
     return Scaffold(
@@ -34,17 +77,41 @@ class _BudgetScreenState extends State<BudgetScreen> {
                   child: Column(
             children: [
               Row(
-                children: [...monthlyBudgetColumns],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'Dart packages are here: https://pub.dev/',
-                  ),
-                  Text(
-                    'You have pushed the button this many times:',
-                  ),
+                children: [
+                  Expanded(
+                      child: Column(children: [
+                    TextFormField(
+                      initialValue: 'Category 1',
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    TextFormField(
+                      initialValue: 'Category 2',
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    TextFormField(
+                      initialValue: 'Category 3',
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    TextFormField(
+                      initialValue: 'Category 3',
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    TextFormField(
+                      initialValue: 'Category 3',
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ])),
+                  ...monthlyBudgetColumns
                 ],
               ),
             ],

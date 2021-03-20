@@ -8,8 +8,6 @@ class MonthOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(24),
-      width: 300,
       child: Center(
           child: Text(
         monthText,
