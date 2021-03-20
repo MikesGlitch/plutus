@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plutus/src/screens/budget_screen.dart';
+import 'package:plutus/src/screens/budget_screen2.dart';
 import 'package:plutus/src/screens/help_screen.dart';
 import 'package:plutus/src/screens/investments_screen.dart';
 import 'package:plutus/src/screens/reports_screen.dart';
@@ -32,6 +33,15 @@ class SideNav extends StatelessWidget {
               onTap: () {
                 Navigator.of(context)
                     .push(navigateToScreenNoAnimation(BudgetScreen()));
+                // Navigator.pop(context); // close the drawer
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.grade),
+              title: Text('Budget 2 datatable'),
+              onTap: () {
+                Navigator.of(context)
+                    .push(navigateToScreenNoAnimation(BudgetScreen2()));
                 // Navigator.pop(context); // close the drawer
               },
             ),

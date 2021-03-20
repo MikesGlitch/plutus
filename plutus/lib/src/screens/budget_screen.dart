@@ -66,9 +66,14 @@ class _BudgetScreenState extends State<BudgetScreen> {
     for (var month in months) {
       var budgetCategorySpendingRows = [];
       for (var budgetCategoryGroup in budgetCategoryGroups) {
-        // It's weird setting 45 as the height.  May need to somehow set it everywehere else using sizedbox or something
-        budgetCategorySpendingRows
-            .add(Row(children: [SizedBox(height: rowHeight)]));
+        budgetCategorySpendingRows.add(Row(children: [
+          Expanded(
+            child: Container(
+                height: rowHeight,
+                decoration: BoxDecoration(
+                    border: Border(top: BorderSide(), bottom: BorderSide()))),
+          )
+        ]));
 
         for (var category in budgetCategoryGroup.categories) {
           budgetCategorySpendingRows.add(SizedBox(
@@ -103,7 +108,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
 
       monthlyBudgetColumns.add(Expanded(
           child: Container(
-              margin: const EdgeInsets.all(6),
+              padding: const EdgeInsets.all(6),
               child: Column(
                 children: [
                   MonthOverview(
@@ -113,9 +118,19 @@ class _BudgetScreenState extends State<BudgetScreen> {
                   Container(
                       height: headerBudgetTitleHeight,
                       child: Row(children: [
-                        Expanded(child: Text("Budget")),
-                        Expanded(child: Text("Outflow")),
-                        Expanded(child: Text("Balance"))
+                        Expanded(
+                            child: Text(
+                          "Budget",
+                          textAlign: TextAlign.center,
+                        )),
+                        Expanded(
+                            child:
+                                Text("Outflow", textAlign: TextAlign.center)),
+                        Expanded(
+                            child: Text(
+                          "Balance",
+                          textAlign: TextAlign.center,
+                        ))
                       ])),
                   ...budgetCategorySpendingRows
                 ],
