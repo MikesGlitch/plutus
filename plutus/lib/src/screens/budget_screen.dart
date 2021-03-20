@@ -10,44 +10,95 @@ class BudgetScreen extends StatefulWidget {
   _BudgetScreenState createState() => _BudgetScreenState();
 }
 
+class BudgetCategoryGroup {
+  BudgetCategoryGroup({this.name, this.categories});
+
+  final String name;
+
+  final List<String> categories;
+}
+
 class _BudgetScreenState extends State<BudgetScreen> {
   @override
   Widget build(BuildContext context) {
-    var months = ['January' /*, 'February', 'March', 'April'*/];
+    var months = ['January', 'February', 'March', 'April'];
     var monthlyBudgetColumns = [];
-    for (var month in months) {
-      var budgetCategories = [
-        'Food shopping',
-        'Spending money',
-        'Council tax',
-        'Utility bills',
-        'Internet bills'
-      ];
 
+    double headerMonthHeight = 50;
+    double headerBudgetTitleHeight = 30;
+    double headerHeight = headerMonthHeight + headerBudgetTitleHeight;
+    double rowHeight = 40;
+
+    List<BudgetCategoryGroup> budgetCategoryGroups = [
+      new BudgetCategoryGroup(
+          name: "Bills", categories: ['Utility', 'Internet', 'Council tax']),
+      new BudgetCategoryGroup(
+          name: "Expenses", categories: ['Food shopping', 'Spending money']),
+    ];
+
+    var budgetCategoryFields = [];
+    for (var budgetCategoryGroup in budgetCategoryGroups) {
+      budgetCategoryFields.add(SizedBox(
+          height: rowHeight,
+          child: TextFormField(
+            readOnly: true,
+            initialValue: budgetCategoryGroup.name,
+            decoration: InputDecoration(
+              isDense: true,
+              border: OutlineInputBorder(),
+            ),
+          )));
+
+      for (var category in budgetCategoryGroup.categories) {
+        budgetCategoryFields.add(SizedBox(
+            height: rowHeight,
+            child: TextFormField(
+              readOnly: true,
+              initialValue: category,
+              decoration: InputDecoration(
+                isDense: true,
+                border: OutlineInputBorder(),
+              ),
+            )));
+      }
+    }
+
+    for (var month in months) {
       var budgetCategorySpendingRows = [];
-      for (var budgetCategory in budgetCategories) {
-        budgetCategorySpendingRows.add(Row(
-          children: [
-            Expanded(
-                child: TextFormField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-              ),
-            )),
-            Expanded(
-                child: TextFormField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-              ),
-            )),
-            Expanded(
-                child: TextFormField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-              ),
-            )),
-          ],
-        ));
+      for (var budgetCategoryGroup in budgetCategoryGroups) {
+        // It's weird setting 45 as the height.  May need to somehow set it everywehere else using sizedbox or something
+        budgetCategorySpendingRows
+            .add(Row(children: [SizedBox(height: rowHeight)]));
+
+        for (var category in budgetCategoryGroup.categories) {
+          budgetCategorySpendingRows.add(SizedBox(
+              height: rowHeight,
+              child: Row(
+                children: [
+                  Expanded(
+                      child: TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      isDense: true,
+                    ),
+                  )),
+                  Expanded(
+                      child: TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      isDense: true,
+                    ),
+                  )),
+                  Expanded(
+                      child: TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      isDense: true,
+                    ),
+                  )),
+                ],
+              )));
+        }
       }
 
       monthlyBudgetColumns.add(Expanded(
@@ -56,13 +107,16 @@ class _BudgetScreenState extends State<BudgetScreen> {
               child: Column(
                 children: [
                   MonthOverview(
+                    height: headerMonthHeight,
                     monthText: month,
                   ),
-                  Row(children: [
-                    Expanded(child: Text("Budget")),
-                    Expanded(child: Text("Outflow")),
-                    Expanded(child: Text("Balance"))
-                  ]),
+                  Container(
+                      height: headerBudgetTitleHeight,
+                      child: Row(children: [
+                        Expanded(child: Text("Budget")),
+                        Expanded(child: Text("Outflow")),
+                        Expanded(child: Text("Balance"))
+                      ])),
                   ...budgetCategorySpendingRows
                 ],
               ))));
@@ -80,36 +134,8 @@ class _BudgetScreenState extends State<BudgetScreen> {
                 children: [
                   Expanded(
                       child: Column(children: [
-                    TextFormField(
-                      initialValue: 'Category 1',
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    TextFormField(
-                      initialValue: 'Category 2',
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    TextFormField(
-                      initialValue: 'Category 3',
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    TextFormField(
-                      initialValue: 'Category 3',
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    TextFormField(
-                      initialValue: 'Category 3',
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
+                    Container(height: headerHeight),
+                    ...budgetCategoryFields
                   ])),
                   ...monthlyBudgetColumns
                 ],
