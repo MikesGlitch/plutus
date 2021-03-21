@@ -111,26 +111,19 @@ class _BudgetScreenState extends State<BudgetScreen> {
               padding: const EdgeInsets.all(6),
               child: Column(
                 children: [
-                  MonthOverview(
-                    height: headerMonthHeight,
-                    monthText: month,
-                  ),
+                  MonthOverview(height: headerMonthHeight, monthText: month),
                   Container(
                       height: headerBudgetTitleHeight,
                       child: Row(children: [
                         Expanded(
-                            child: Text(
-                          "Budget",
-                          textAlign: TextAlign.center,
-                        )),
+                          child: Text("Budget", textAlign: TextAlign.center),
+                        ),
                         Expanded(
-                            child:
-                                Text("Outflow", textAlign: TextAlign.center)),
+                          child: Text("Outflow", textAlign: TextAlign.center),
+                        ),
                         Expanded(
-                            child: Text(
-                          "Balance",
-                          textAlign: TextAlign.center,
-                        ))
+                          child: Text("Balance", textAlign: TextAlign.center),
+                        )
                       ])),
                   ...budgetCategorySpendingRows
                 ],
@@ -142,21 +135,20 @@ class _BudgetScreenState extends State<BudgetScreen> {
         children: [
           SideNav(),
           Expanded(
-              child: Container(
+            child: Row(
+              children: [
+                Expanded(
                   child: Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                      child: Column(children: [
-                    Container(height: headerHeight),
-                    ...budgetCategoryFields
-                  ])),
-                  ...monthlyBudgetColumns
-                ],
-              ),
-            ],
-          )))
+                    children: [
+                      Container(height: headerHeight),
+                      ...budgetCategoryFields
+                    ],
+                  ),
+                ),
+                ...monthlyBudgetColumns,
+              ],
+            ),
+          )
         ],
       ),
     );
