@@ -1,5 +1,5 @@
 # plutus
-Budget app built in Flutter.
+Plutus(named after the Greek god of wealth) is a budget app built in Flutter.
 
 ## Watch me build the app (live stream)
 
