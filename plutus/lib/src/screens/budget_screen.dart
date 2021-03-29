@@ -21,7 +21,7 @@ class BudgetCategoryGroup {
 class _BudgetScreenState extends State<BudgetScreen> {
   @override
   Widget build(BuildContext context) {
-    var months = ['January', 'February', 'March', 'April'];
+    var months = ['January', 'February', 'March'];
     var monthlyBudgetColumns = [];
 
     double headerMonthHeight = 50;
@@ -45,6 +45,8 @@ class _BudgetScreenState extends State<BudgetScreen> {
             initialValue: budgetCategoryGroup.name,
             decoration: InputDecoration(
               isDense: true,
+              filled: true,
+              fillColor: Theme.of(context).accentColor,
               border: OutlineInputBorder(),
             ),
           )));
@@ -68,39 +70,86 @@ class _BudgetScreenState extends State<BudgetScreen> {
       for (var budgetCategoryGroup in budgetCategoryGroups) {
         budgetCategorySpendingRows.add(Row(children: [
           Expanded(
-            child: Container(
-                height: rowHeight,
-                decoration: BoxDecoration(
-                    border: Border(top: BorderSide(), bottom: BorderSide()))),
-          )
+              child: SizedBox(
+                  height: rowHeight,
+                  child: TextFormField(
+                    readOnly: true,
+                    initialValue: '£0.00',
+                    decoration: InputDecoration(
+                      isDense: true,
+                      filled: true,
+                      fillColor: Theme.of(context).accentColor,
+                      border: OutlineInputBorder(),
+                    ),
+                  ))),
+          Expanded(
+              child: SizedBox(
+                  height: rowHeight,
+                  child: TextFormField(
+                    readOnly: true,
+                    initialValue: '£0.00',
+                    decoration: InputDecoration(
+                      isDense: true,
+                      filled: true,
+                      fillColor: Theme.of(context).accentColor,
+                      border: OutlineInputBorder(),
+                    ),
+                  ))),
+          Expanded(
+              child: SizedBox(
+                  height: rowHeight,
+                  child: TextFormField(
+                    readOnly: true,
+                    initialValue: '£0.00',
+                    decoration: InputDecoration(
+                      isDense: true,
+                      filled: true,
+                      fillColor: Theme.of(context).accentColor,
+                      border: OutlineInputBorder(),
+                    ),
+                  )))
         ]));
+
+        BoxDecoration boxBorder() {
+          return BoxDecoration(
+            border: Border.all(),
+          );
+        }
+
+        var denseTextFormField = Expanded(
+            child: TextFormField(
+          initialValue: "£0.00",
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            isDense: true,
+          ),
+        ));
+
+        var readonlyBalance = Expanded(
+            child: TextFormField(
+          readOnly: true,
+          initialValue: "£0.00",
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            isDense: true,
+          ),
+        ));
+
+        // var readonlyBalance = Expanded(
+        //     child: Container(
+        //         decoration: boxBorder(),
+        //         child: Text(
+        //           "£0.00",
+        //         )));
 
         for (var category in budgetCategoryGroup.categories) {
           budgetCategorySpendingRows.add(SizedBox(
               height: rowHeight,
               child: Row(
                 children: [
-                  Expanded(
-                      child: TextFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                    ),
-                  )),
-                  Expanded(
-                      child: TextFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                    ),
-                  )),
-                  Expanded(
-                      child: TextFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                    ),
-                  )),
+                  denseTextFormField,
+                  readonlyBalance,
+                  readonlyBalance,
                 ],
               )));
         }
@@ -108,7 +157,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
 
       monthlyBudgetColumns.add(Expanded(
           child: Container(
-              padding: const EdgeInsets.all(6),
+              padding: const EdgeInsets.only(left: 6, right: 6),
               child: Column(
                 children: [
                   MonthOverview(height: headerMonthHeight, monthText: month),

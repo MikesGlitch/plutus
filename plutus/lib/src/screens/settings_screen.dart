@@ -12,12 +12,30 @@ class SettingsScreen extends StatelessWidget {
         body: Row(children: [
       SideNav(),
       Expanded(
-          child: Column(children: [
-        Center(
-            child: Column(children: [
-          Text('Settings go here.'),
-        ]))
-      ]))
+          child: Container(
+              padding: EdgeInsets.all(20),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Settings'),
+                    Row(
+                      children: [
+                        Text('File location'),
+                        Container(
+                          margin: EdgeInsets.all(10),
+                          width: 400,
+                          child: TextFormField(
+                            initialValue:
+                                'C://Users/PandaMan/Desktop/test.json',
+                            decoration: InputDecoration(
+                              // isDense: true,
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                        )
+                      ],
+                    )
+                  ])))
     ]));
   }
 }
