@@ -4,6 +4,28 @@
 - Hook into Money Savings Expert somehow to tell people when they could save money on electricity?  Could implement flags for certain categories like utilities etc
 Plutus(named after the Greek god of wealth) is a budget app built in Flutter.
 
+# Reconsider the approach
+
+## Desktop app 
+### Benefits:
+- Cheaper
+- Data security isn't as much of an issue (it's on the users pcs)
+
+### Drawbacks:
+- Harder to update (but still possible)
+- Harder to build - debatable if I use Electron instead of Flutter
+
+## Web app 
+### Benefits:
+- Easier to build
+- Easier to update
+- Easier to get users to try it out
+
+### Drawbacks:
+- A lot more expensive
+- More competition with other vendors
+
+
 ## Watch me build the app (live stream)
 
 ### Playlist:
