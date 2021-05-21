@@ -4,6 +4,8 @@
 - Hook into Money Savings Expert somehow to tell people when they could save money on electricity?  Could implement flags for certain categories like utilities etc
 Plutus(named after the Greek god of wealth) is a budget app built in Flutter.
 
+- Add analytics - I want screen views and errors to be logged to Google/somewhere useful
+
 ## Watch me build the app (live stream)
 
 ### Playlist:
