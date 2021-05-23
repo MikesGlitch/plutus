@@ -8,7 +8,7 @@ namespace Plutus.Application
 {
     public class RetirementPlanService
     {
-        public string GetRetirementPlan()
+        public RetirementPlan GetRetirementPlan()
         {
             var inputs = new RetirementPlanMainInputs
             {
@@ -22,60 +22,67 @@ namespace Plutus.Application
                 ReturnAfterInflationCAGREquities = 6.07, // calculated
                 StandardDeviationMinRisk = 0,
                 StandardDeviationEquities = 15,
-                GrowthInAnnualContribution = 0 // not relevant for me
+                GrowthInAnnualContribution = 0, // not relevant for me
+                CurrentAmount = 216385.01M,
+                CurrentTotalContributions = 170211.24M,
+                ThisYearsContributions = 30000M,
+                MinRiskAllocation = 0,
+                CurrentAge = 30,
+                DeathAge = 90
             };
 
-            var currentAge = 30;
-            var deathAge = 90;
-
-            var retirementPlan = new RetirementPlan();
-            var yearCount = 0;
-            var currentAmount = 216385.01M;
-            var currentTotalContributions = 170211.24M;
-            var thisYearsContributions = 30000;
-            var minRiskAllocation = 0;
-
-            for (var year = currentAge; year <= deathAge; year++) 
-            {
-                var thisYear = new RetirementPlan.Year(year, yearCount, currentAmount, thisYearsContributions, currentTotalContributions, minRiskAllocation, inputs);
-                retirementPlan.Years.Add(thisYear);
-
-                // setup next year
-                yearCount++;
-                currentAmount = thisYear.EndOfYearAmount;
-            }
-
-            return JsonSerializer.Serialize(retirementPlan, new JsonSerializerOptions { WriteIndented = true });
+            var retirementPlan = new RetirementPlan(inputs);
+            return retirementPlan;
         }
     }
 
     public class RetirementPlan
     {
+        public RetirementPlan(RetirementPlanMainInputs inputs)
+        {
+            var yearCount = 0;
+            var currentAmount = inputs.CurrentAmount;
+
+            for (var year = inputs.CurrentAge; year <= inputs.DeathAge; year++)
+            {
+                var thisYear = new Year(year, yearCount, currentAmount, inputs);
+                Years.Add(thisYear);
+
+                // setup next year
+                yearCount++;
+                currentAmount = thisYear.EndOfYearAmount;
+            }
+        }
+
         public List<Year> Years { get; set; } = new List<Year>();
 
         public class Year
         {
-            public Year(int age, int yearCount, decimal priorYearAmount, decimal annualContributions, decimal currentTotalContributions, decimal minRiskAllocationPercent, RetirementPlanMainInputs inputs)
+            public Year(int age, int yearCount, decimal priorYearAmount, RetirementPlanMainInputs inputs)
             {
                 Age = age;
                 YearCount = yearCount;
                 PriorYearAmount = priorYearAmount;
-                AnnualContributions = annualContributions;
+                AnnualContributions = inputs.ThisYearsContributions;
 
-                // calculated
+                // Calculated
                 StartOfYearAmount = PriorYearAmount + AnnualContributions;
-                MinRiskAllocationPercent = minRiskAllocationPercent;
-                MinRiskAllocationAmount = StartOfYearAmount * (minRiskAllocationPercent/100);
-                EquityRiskAllocationPercent = 100M - MinRiskAllocationPercent;
+                MinRiskAllocationPercent = inputs.MinRiskAllocation;
+                MinRiskAllocationAmount = StartOfYearAmount * (inputs.MinRiskAllocation / 100);
+                EquityRiskAllocationPercent = 100M - inputs.MinRiskAllocation;
                 EquityRiskAllocationAmount = StartOfYearAmount * (EquityRiskAllocationPercent/100);
-                TotalContribution = currentTotalContributions + AnnualContributions;
+                TotalContribution = inputs.CurrentTotalContributions + AnnualContributions;
                 MinRiskReturn = inputs.ReturnAfterInflationAnnualAverageMinRisk;
-
-                var normal = new Normal(inputs.ReturnAfterInflationAnnualAverageEquities, inputs.StandardDeviationEquities);
-                var equityReturnPercentage = normal.InverseCumulativeDistribution(new Random().NextDouble());
-                EquityRiskReturn = equityReturnPercentage;
+                EquityRiskReturn = GetEquityReturnPercentage(inputs.ReturnAfterInflationAnnualAverageEquities, inputs.StandardDeviationEquities);
                 InvestmentReturn = (MinRiskAllocationAmount * (decimal)MinRiskReturn) + (EquityRiskAllocationAmount * ((decimal)EquityRiskReturn/100));
                 EndOfYearAmount = StartOfYearAmount + InvestmentReturn;
+            }
+
+            private double GetEquityReturnPercentage(double returnAfterInflationAnnualAverageEquities, double standardDeviationEquities)
+            {
+                var normal = new Normal(returnAfterInflationAnnualAverageEquities, standardDeviationEquities);
+                var equityReturnPercentage = normal.InverseCumulativeDistribution(new Random().NextDouble());
+                return equityReturnPercentage;
             }
 
             public int Age { get; private set; }
