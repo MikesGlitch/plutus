@@ -1,5 +1,8 @@
 # plutus
 
+# Refactoring idea
+- What if I made it a website and gave it access to a users Google Drive. The Google Drive could work as a data store/backup and the website could act as the interface.  I think Draw.io do something similar
+
 # Ideas
 - Hook into Money Savings Expert somehow to tell people when they could save money on electricity?  Could implement flags for certain categories like utilities etc
 Plutus(named after the Greek god of wealth) is a budget app built in Flutter.
