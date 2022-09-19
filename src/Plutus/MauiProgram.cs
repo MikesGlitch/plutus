@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.WebView.Maui;
+using People;
 using Plutus.Data;
 
 namespace Plutus;
@@ -22,6 +23,10 @@ public static class MauiProgram
 		
 		builder.Services.AddSingleton<WeatherForecastService>();
 
-		return builder.Build();
+        string dbPath = FileAccessHelper.GetLocalFilePath("test.db3");
+        builder.Services.AddSingleton<UserRepository>(s => ActivatorUtilities.CreateInstance<UserRepository>(s, dbPath));
+
+
+        return builder.Build();
 	}
 }

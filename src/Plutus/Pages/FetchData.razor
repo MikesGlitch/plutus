@@ -1,13 +1,13 @@
 ﻿@page "/fetchdata"
 
 @using Plutus.Data
-@inject WeatherForecastService ForecastService
+@inject UserRepository UserRepository
 
-<h1>Weather forecast</h1>
+<h1>Users</h1>
 
-<p>This component demonstrates fetching data from a service.</p>
+<button @onclick="AddUser">Add User</button>
 
-@if (forecasts == null)
+@if (users == null)
 {
 	<p><em>Loading...</em></p>
 }
@@ -16,20 +16,16 @@ else
 	<table class="table">
 		<thead>
 			<tr>
-				<th>Date</th>
-				<th>Temp. (C)</th>
-				<th>Temp. (F)</th>
-				<th>Summary</th>
+				<th>First name</th>
+				<th>Last name</th>
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (var forecast in forecasts)
+			@foreach (var user in users)
 			{
 				<tr>
-					<td>@forecast.Date.ToShortDateString()</td>
-					<td>@forecast.TemperatureC</td>
-					<td>@forecast.TemperatureF</td>
-					<td>@forecast.Summary</td>
+					<td>@user.FirstName</td>
+					<td>@user.LastName</td>
 				</tr>
 			}
 		</tbody>
@@ -37,10 +33,21 @@ else
 }
 
 @code {
-	private WeatherForecast[] forecasts;
+	private IEnumerable<User> users;
 
-	protected override async Task OnInitializedAsync()
+	private void AddUser() {
+		UserRepository.AddNewUser("Michael", "Clark");
+		GetUsers();
+	}
+
+	private void GetUsers()
 	{
-		forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+		users = UserRepository.GetAllUsers();
+	}
+
+	protected override Task OnInitializedAsync()
+	{
+		GetUsers();
+		return Task.FromResult(true);
 	}
 }
