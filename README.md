@@ -1,11 +1,20 @@
 # plutus
 
+# New ideas (2022)
+- Investments module: 
+    - select which investments you have, based on data from morningstar, project estimated returns based on historic data (like timelineapp)
+    - Monte carlo 
+
+- We have the budget module all scoped out
+- Take into account consistent salary? The app could also conver one of the most important aspects of money - career. Why stop at budgeting and investing, the most important part is making the money to begin with. We can setup a module that records pay rises, can scan the market for higher offers, maybe even highlight when you're underpaid and offer new job ideas?
+
 # Refactoring idea
 - What if I made it a website and gave it access to a users Google Drive. The Google Drive could work as a data store/backup and the website could act as the interface.  I think Draw.io do something similar
 
 # Ideas
 - Hook into Money Savings Expert somehow to tell people when they could save money on electricity?  Could implement flags for certain categories like utilities etc
 Plutus(named after the Greek god of wealth) is a budget app built in Flutter.
+
 
 # Reference links
 - https://blog.gskinner.com/archives/2020/09/flokk-how-we-built-a-desktop-app-using-flutter.html
