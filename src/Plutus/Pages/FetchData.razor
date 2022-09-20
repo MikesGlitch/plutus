@@ -1,9 +1,19 @@
 ﻿@page "/fetchdata"
 
+@using MediatR
 @using Plutus.Data
-@inject UserRepository UserRepository
+@inject IMediator mediator
 
 <h1>Users</h1>
+
+<label>
+	First Name:
+	<input @bind="FirstName" />
+</label>
+<label>
+	Last Name:
+	<input @bind="LastName" />
+</label>
 
 <button @onclick="AddUser">Add User</button>
 
@@ -35,19 +45,22 @@ else
 @code {
 	private IEnumerable<User> users;
 
-	private void AddUser() {
-		UserRepository.AddNewUser("Michael", "Clark");
-		GetUsers();
+	private string FirstName { get; set; }
+
+	private string LastName { get; set; }
+
+	private async Task AddUser() {
+		await mediator.Send(new AddNewUser.Request { FirstName = FirstName, LastName = LastName });
+		await GetUsers();
 	}
 
-	private void GetUsers()
+	private async Task GetUsers()
 	{
-		users = UserRepository.GetAllUsers();
+		users = await mediator.Send(new GetAllUsers.Request());
 	}
 
-	protected override Task OnInitializedAsync()
+	protected override async Task OnInitializedAsync()
 	{
-		GetUsers();
-		return Task.FromResult(true);
+		await GetUsers();
 	}
 }

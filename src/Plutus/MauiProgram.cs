@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components.WebView.Maui;
+﻿using MediatR;
 using People;
 using Plutus.Data;
 
@@ -17,15 +17,16 @@ public static class MauiProgram
 			});
 
 		builder.Services.AddMauiBlazorWebView();
-		#if DEBUG
+
+#if DEBUG
 		builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
-		
-		builder.Services.AddSingleton<WeatherForecastService>();
 
-        string dbPath = FileAccessHelper.GetLocalFilePath("test.db3");
-        builder.Services.AddSingleton<UserRepository>(s => ActivatorUtilities.CreateInstance<UserRepository>(s, dbPath));
+        string dbPath = $"Data Source={FileAccessHelper.GetLocalFilePath("test.db3")}";
+		builder.Services.AddSingleton<IPlutusDb>(s => ActivatorUtilities.CreateInstance<PlutusDb>(s, dbPath));
+        builder.Services.AddMediatR(typeof(AddNewUser).Assembly);
 
+        // Make sure the migrations run on app startup - needs to be automatic so it runs when a user is up to date when they start the app
 
         return builder.Build();
 	}

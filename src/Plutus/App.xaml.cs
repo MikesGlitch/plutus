@@ -1,16 +1,11 @@
-﻿using Plutus.Data;
-
-namespace Plutus;
+﻿namespace Plutus;
 
 public partial class App : Application
 {
-    public static UserRepository UserRepo { get; private set; }
-
-    public App(UserRepository repo)
+    public App()
 	{
 		InitializeComponent();
 
 		MainPage = new MainPage();
-        UserRepo = repo;
     }
 }
