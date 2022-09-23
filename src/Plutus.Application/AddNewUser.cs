@@ -20,7 +20,12 @@ namespace Plutus.Data
                 if (string.IsNullOrEmpty(request.FirstName) && string.IsNullOrEmpty(request.LastName))
                     throw new Exception("Valid name required");
 
-                await _plutusDb.Connection.ExecuteAsync($"INSERT INTO USER (FirstName, LastName) VALUES ('{request.FirstName}', '{request.LastName}')");
+                await _plutusDb.Connection.ExecuteAsync($"INSERT INTO USER (FirstName, LastName, CreatedAtUtc, ModifiedAtUtc) VALUES (@FirstName, @LastName, @CreatedAtUtc, @ModifiedAtUtc)", new {
+                    FirstName = request.FirstName,
+                    LastName = request.LastName,
+                    CreatedAtUtc = DateTime.UtcNow,
+                    ModifiedAtUtc = DateTime.UtcNow,
+                });
                 Console.WriteLine("Inserted");
             }
             catch (Exception ex)

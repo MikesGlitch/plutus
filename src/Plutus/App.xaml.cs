@@ -1,10 +1,16 @@
-﻿namespace Plutus;
+﻿using FluentMigrator.Runner;
+using System.Text;
+
+namespace Plutus;
 
 public partial class App : Application
 {
-    public App()
+    public App(IMigrationRunner migrationRunner)
 	{
-		InitializeComponent();
+        // Run the migrations
+        migrationRunner.MigrateUp();
+
+        InitializeComponent();
 
 		MainPage = new MainPage();
     }

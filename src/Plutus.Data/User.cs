@@ -1,11 +1,15 @@
 ﻿namespace Plutus.Data
 {
-    public class User
+    public class User : ICreatedAndModifiedAt
     {
         public int Id { get; set; }
 
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
+
+        public DateTime CreatedAtUtc { get; set; }
+
+        public DateTime ModifiedAtUtc { get; set; }
     }
 }
