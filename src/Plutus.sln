@@ -4,11 +4,11 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plutus", "Plutus\Plutus.csproj", "{AE942846-064C-4734-BAAE-D91890241ED6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plutus.Data", "Plutus.Data\Plutus.Data.csproj", "{350EB9FA-6B18-413B-948E-F2059C4EF054}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plutus.Data", "Plutus.Data\Plutus.Data.csproj", "{350EB9FA-6B18-413B-948E-F2059C4EF054}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plutus.Application", "Plutus.Application\Plutus.Application.csproj", "{3D3F2B55-F573-4BAE-86DF-05F4B2F5182E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plutus.Application", "Plutus.Application\Plutus.Application.csproj", "{3D3F2B55-F573-4BAE-86DF-05F4B2F5182E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plutus.Migrations", "Plutus.Migrations\Plutus.Migrations.csproj", "{B84033DF-5C8A-496C-B53E-94E083B6D057}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plutus.Migrations", "Plutus.Migrations\Plutus.Migrations.csproj", "{B84033DF-5C8A-496C-B53E-94E083B6D057}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

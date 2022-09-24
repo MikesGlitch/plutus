@@ -1,11 +1,8 @@
 ﻿using FluentMigrator.Runner;
-using FluentMigrator.Runner.Processors;
 using MediatR;
-using Microsoft.Extensions.DependencyInjection;
 using People;
 using Plutus.Data;
 using Plutus.Migrations;
-using System;
 
 namespace Plutus;
 
@@ -14,12 +11,7 @@ public static class MauiProgram
 	public static MauiApp CreateMauiApp()
 	{
 		var builder = MauiApp.CreateBuilder();
-		builder
-			.UseMauiApp<App>()
-			.ConfigureFonts(fonts =>
-			{
-				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-			});
+		builder.UseMauiApp<App>();
 
         string dbPath = $"Data Source={FileAccessHelper.GetLocalFilePath("test.db3")}";
         builder.Services
