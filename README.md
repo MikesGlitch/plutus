@@ -1,5 +1,15 @@
 # plutus
 
+Still figuring out how I want to write this.
+
+The deciding factor might be to do with connection with Google Drive.  I'd like to be able to do this without a Server. I just want my UI to connect to Google Drive and do what it needs to from the data there. 
+
+It can be connected to from either web/desktop/whatever.  I think MAUI is limited in that regard. Flutter - maybe not. My main concern is if I require a web UI no matter what, I may as well use a web technology and bundle it with Electron or whatever to facilitate on devices. 
+
+I'm always going to run into the same issue with localdb - with JS it's not as bad (better connectors).
+
+Why didn't I just write it in React?  Dunno yet, I might change it.
+
 # New ideas (2022)
 - Investments module: 
     - select which investments you have, based on data from morningstar, project estimated returns based on historic data (like timelineapp)
