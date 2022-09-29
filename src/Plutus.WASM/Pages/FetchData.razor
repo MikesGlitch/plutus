@@ -1,0 +1,66 @@
+﻿@page "/fetchdata"
+
+@using MediatR
+@using Plutus.Data
+@inject IMediator mediator
+
+<h1>Users</h1>
+
+<label>
+	First Name:
+	<input @bind="FirstName" />
+</label>
+<label>
+	Last Name:
+	<input @bind="LastName" />
+</label>
+
+<button @onclick="AddUser">Add User</button>
+
+@if (users == null)
+{
+	<p><em>Loading...</em></p>
+}
+else
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>First name</th>
+				<th>Last name</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var user in users)
+			{
+				<tr>
+					<td>@user.FirstName</td>
+					<td>@user.LastName</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@code {
+	private IEnumerable<User> users;
+
+	private string FirstName { get; set; }
+
+	private string LastName { get; set; }
+
+	private async Task AddUser() {
+		await mediator.Send(new AddNewUser.Request { FirstName = FirstName, LastName = LastName });
+		await GetUsers();
+	}
+
+	private async Task GetUsers()
+	{
+		users = await mediator.Send(new GetAllUsers.Request());
+	}
+
+	protected override async Task OnInitializedAsync()
+	{
+		await GetUsers();
+	}
+}

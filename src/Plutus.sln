@@ -10,6 +10,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plutus.Application", "Plutu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plutus.Migrations", "Plutus.Migrations\Plutus.Migrations.csproj", "{B84033DF-5C8A-496C-B53E-94E083B6D057}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plutus.WASM", "Plutus.WASM\Plutus.WASM.csproj", "{7DAF81CA-6FF8-4C93-9DC0-5A2042BACDCB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +36,10 @@ Global
 		{B84033DF-5C8A-496C-B53E-94E083B6D057}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B84033DF-5C8A-496C-B53E-94E083B6D057}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B84033DF-5C8A-496C-B53E-94E083B6D057}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DAF81CA-6FF8-4C93-9DC0-5A2042BACDCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DAF81CA-6FF8-4C93-9DC0-5A2042BACDCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DAF81CA-6FF8-4C93-9DC0-5A2042BACDCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DAF81CA-6FF8-4C93-9DC0-5A2042BACDCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
