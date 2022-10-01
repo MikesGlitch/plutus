@@ -3,7 +3,7 @@
 Still figuring out how I want to write this.
 
 ## TODO
-- Check out indexedDB and how that would work
+- Check out indexedDB and how that would work. I could write a simple database backed by the FileSystem API, and periodically lock the database and back up that file. This would be pretty cool because I don't know of anyone who has implemented a simple FileSystem API backed database, but I could see it being useful for other purposes.
 
 
 -----------
@@ -11,6 +11,10 @@ Still figuring out how I want to write this.
 New thoughts - tried google drive integration.  Would be flaky and difficult.  Would require me to load in a sqlite dependency which would be WASM and make the bundle huge.  Also to do all the work locally and update google drive would be madness.
 
 Looked into indexedDB, haven't done a prototype with it yet but it would have issues syncing across devices.  If you wanted to use it across two compys you'd need to write a sync for it.  Might be possible, worth checking. It's not relational though, which may pose a problem. 
+
+I could write a simple database backed by the FileSystem API, and periodically lock the database and back up that file. This would be pretty cool because I don't know of anyone who has implemented a simple FileSystem API backed database, but I could see it being useful for other purposes.
+
+
 
 Other thought is if you want to support multiple devices you would be easier with a server and the data stored somewhere.  If I had a server it would be fine to put the DB on the users Google Drive but there's a cost involved in the server. I feel the cost issue was why ActualBudget failed and took their stuff offline. 
 
