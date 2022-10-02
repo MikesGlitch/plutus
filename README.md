@@ -6,6 +6,11 @@ Still figuring out how I want to write this.
 - Check out indexedDB and how that would work. I could write a simple database backed by the FileSystem API, and periodically lock the database and back up that file. This would be pretty cool because I don't know of anyone who has implemented a simple FileSystem API backed database, but I could see it being useful for other purposes.
 
 
+Check out Dexie for indexedDB - the raw API for indexeddb is complicated. libs may make it much easier:
+
+https://github.com/dexie/Dexie.js
+
+
 -----------
 29/09/2022
 New thoughts - tried google drive integration.  Would be flaky and difficult.  Would require me to load in a sqlite dependency which would be WASM and make the bundle huge.  Also to do all the work locally and update google drive would be madness.

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 import ListFiles from './ListFiles';
 import { config } from './../config'
@@ -9,7 +9,7 @@ function App() {
   const CLIENTID = config.CLIENT_ID
   const API_KEY = config.API_KEY
   
-  const [dependenciesLoaded, setDependenciesLoaded] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(false)
   
   async function initClient() {
     await (window as any).gapi.client.init({
@@ -25,7 +25,7 @@ function App() {
           throw (response);
         }
   
-        setDependenciesLoaded(true)
+        setLoggedIn(true)
       },
     })
   
@@ -39,13 +39,15 @@ function App() {
     }
   }
   
-  useEffect(() => {
+  function authenticate() {
     (window as any).gapi.load('client', initClient);
-  }, [])
+  }
 
   return (
     <div className="App">
-      {dependenciesLoaded ? <ListFiles /> : <p>Please login</p>}
+      <p>TODO: IndexedDB stuff with <a target="_blank" href="https://github.com/dexie/Dexie.js">Dexie</a></p>
+      {loggedIn === false && <button onClick={authenticate}>Login to list Google Drive files</button>}
+      {loggedIn && <ListFiles />}
     </div>
   )
 }
