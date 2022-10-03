@@ -2,6 +2,8 @@ import { useState } from 'react'
 import './App.css'
 import ListFiles from './ListFiles';
 import { config } from './../config'
+import UserRegistrationForm from './features/users/UserRegistrationForm';
+import UserList from './features/users/UserList';
 
 function App() {
   const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'
@@ -46,8 +48,13 @@ function App() {
   return (
     <div className="App">
       <p>TODO: IndexedDB stuff with <a target="_blank" href="https://github.com/dexie/Dexie.js">Dexie</a></p>
+      <p>Pretty good example with typescript: <a target="_blank" href="https://github.com/dexie/Dexie.js/tree/master/samples/dexie-cloud-todo-app/src">Example</a></p>
       {loggedIn === false && <button onClick={authenticate}>Login to list Google Drive files</button>}
       {loggedIn && <ListFiles />}
+
+      <UserRegistrationForm />
+
+      <UserList />
     </div>
   )
 }
