@@ -1,7 +1,5 @@
 # plutus
 
-Still figuring out how I want to write this.
-
 ## TODO
 - Check out indexedDB and how that would work. I could write a simple database backed by the FileSystem API, and periodically lock the database and back up that file. This would be pretty cool because I don't know of anyone who has implemented a simple FileSystem API backed database, but I could see it being useful for other purposes.
 
