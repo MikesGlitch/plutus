@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { db, User } from "../../db";
 
-function userRegistrationForm() {
+function UserRegistrationForm() {
 
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -69,4 +69,4 @@ function userRegistrationForm() {
     )
 }
 
-export default userRegistrationForm
+export default UserRegistrationForm

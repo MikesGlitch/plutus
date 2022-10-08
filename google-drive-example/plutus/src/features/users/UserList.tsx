@@ -1,21 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { db, User } from "../../db";
 
-function userList() {
+function UserList() {
   const [users, setUsers] = useState<User[]>([]);
   const [searchFilter, setSearchFilter] = useState<string>('')
+
+  useEffect(() => {
+    async function getUsers() {
+      try {
+        const dbUsers = await db.users.filter((user) => (`${user.firstName} ${user.lastName}`).includes(searchFilter)).toArray()
   
-  async function getUsers() {
-    try {
-      const dbUsers = await db.users.filter((user) => (`${user.firstName} ${user.lastName}`).includes(searchFilter)).toArray();
-
-      setUsers(dbUsers);
-    } catch (error) {
-      alert('something bad happened')
+        setUsers(dbUsers)
+      } catch (error) {
+        alert('something bad happened')
+      }
     }
-  }
 
-  getUsers()
+    getUsers()
+  }, [searchFilter])
 
     return (
       <>
@@ -37,4 +39,4 @@ function userList() {
     )
 }
 
-export default userList
+export default UserList
