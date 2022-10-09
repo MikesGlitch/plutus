@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { db, User } from "../../db";
+import { db, IUser } from "../../db";
 
 function UserRegistrationForm() {
 
@@ -17,7 +17,7 @@ function UserRegistrationForm() {
         return
       }
 
-      const newUser: User = {
+      const newUser: IUser = {
         username: username,
         firstName: firstName,
         lastName: lastName,
