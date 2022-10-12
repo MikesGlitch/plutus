@@ -60,10 +60,10 @@ export default function Accounts() {
           <p><b>Transactions for account:</b> {account.name} ({transactionsForAccount.length})</p>
           {transactionsForAccount.map((transaction) => {
             const categoryForTransaction = categories.find((category) => category.id === transaction.categoryId)
-            return (<>
+            return (<div key={transaction.id}>
               <span>Category: {categoryForTransaction?.name}</span>
-              <pre key={transaction.id}>{JSON.stringify(transaction)}</pre>
-            </>)
+              <pre>{JSON.stringify(transaction)}</pre>
+            </div>)
           })}
         </>
       </div>
@@ -72,7 +72,7 @@ export default function Accounts() {
 
     return (
       <>
-        <h1>Accounts</h1>
+        <h1 className="text-xl font-bold">Accounts</h1>
         <div><button onClick={importData}>Import</button></div>
         <div style={{display: "flex", flexDirection: 'column', gap: '1rem'}}>
           <>
