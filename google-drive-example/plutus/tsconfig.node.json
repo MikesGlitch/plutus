@@ -1,3 +1,4 @@
+// Vite uses this file - leave it
 {
   "compilerOptions": {
     "composite": true,

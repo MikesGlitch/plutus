@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { db, IAccount, ICategory, ITransaction, OAccountType } from "../../db";
+import Table from "@/components/Table";
+import TableData from "@/components/Table/TableData";
+import TableHeader from "@/components/Table/TableHeader";
 
 export default function Accounts() {
   const [accounts, setAccounts] = useState<IAccount[]>([]);
@@ -54,17 +57,35 @@ export default function Accounts() {
 
   function accountItem(account: IAccount) {
     const transactionsForAccount = transactions.filter((transaction) => transaction.accountId === account.id)
+
+    const transactionRows = transactionsForAccount.map((transaction) => {
+      const categoryForTransaction = categories.find((category) => category.id === transaction.categoryId)
+      return (
+        <tr key={transaction.id}>
+          <TableData>{transaction.date}</TableData>
+          <TableData>dont have</TableData>
+          <TableData>{categoryForTransaction?.name}</TableData>
+          <TableData>{transaction.amount}</TableData>
+          <TableData>dont really have</TableData>
+        </tr>
+      )
+    })
+
     return (
       <div key={account.id}>
         <>
           <p><b>Transactions for account:</b> {account.name} ({transactionsForAccount.length})</p>
-          {transactionsForAccount.map((transaction) => {
-            const categoryForTransaction = categories.find((category) => category.id === transaction.categoryId)
-            return (<div key={transaction.id}>
-              <span>Category: {categoryForTransaction?.name}</span>
-              <pre>{JSON.stringify(transaction)}</pre>
-            </div>)
-          })}
+          <Table 
+            headers={(
+            <>
+              <TableHeader>Date</TableHeader>
+              <TableHeader>Payee</TableHeader>
+              <TableHeader>Category</TableHeader>
+              <TableHeader>Outflow</TableHeader>
+              <TableHeader>Inflow</TableHeader>
+            </>)}
+            rows={transactionRows} 
+          />          
         </>
       </div>
     )
@@ -73,12 +94,9 @@ export default function Accounts() {
     return (
       <>
         <h1 className="text-xl font-bold">Accounts</h1>
-        <div><button onClick={importData}>Import</button></div>
-        <div style={{display: "flex", flexDirection: 'column', gap: '1rem'}}>
-          <>
-            <h5>Accounts</h5>
-            {accounts.map((account) => accountItem(account))}
-          </>
+        <div><button className="" onClick={importData}>Import</button></div>
+        <div className="flex flex-col gap-6">
+          {accounts.map((account) => accountItem(account))}
         </div>
       </>
     )
