@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import { db, IAccount, ICategory, ITransaction, OAccountType } from "../../db";
-import Table from "@/components/Table";
-import TableData from "@/components/Table/TableData";
-import TableHeader from "@/components/Table/TableHeader";
+import { useEffect, useState } from 'react'
+import { db, IAccount, ICategory, ITransaction, OAccountType } from '../../db'
+import Table from '@/components/Table'
+import TableData from '@/components/Table/TableData'
+import TableHeader from '@/components/Table/TableHeader'
 
-export default function Accounts() {
-  const [accounts, setAccounts] = useState<IAccount[]>([]);
-  const [categories, setCategories] = useState<ICategory[]>([]);
-  const [transactions, setTransactions] = useState<ITransaction[]>([]);
+export default function Accounts () {
+  const [accounts, setAccounts] = useState<IAccount[]>([])
+  const [categories, setCategories] = useState<ICategory[]>([])
+  const [transactions, setTransactions] = useState<ITransaction[]>([])
 
-  async function importData() {
+  async function importData () {
     const accounts: IAccount[] = [
       { name: 'Santander Savings', type: OAccountType.Savings },
       { name: 'IWeb ISA', type: OAccountType.ISA },
@@ -24,10 +24,9 @@ export default function Accounts() {
     const categories: ICategory[] = [
       { name: 'Spending' },
       { name: 'Gas and Electricity' },
-      { name: 'Phone' },
+      { name: 'Phone' }
     ]
 
-    
     await db.categories.bulkAdd(categories)
     setCategories(categories)
 
@@ -39,7 +38,7 @@ export default function Accounts() {
   }
 
   useEffect(() => {
-    async function getAccounts() {
+    async function getAccounts () {
       try {
         const dbAccounts = await db.accounts.toArray()
         setAccounts(dbAccounts)
@@ -55,7 +54,7 @@ export default function Accounts() {
     getAccounts()
   }, [])
 
-  function accountItem(account: IAccount) {
+  function accountItem (account: IAccount) {
     const transactionsForAccount = transactions.filter((transaction) => transaction.accountId === account.id)
 
     const transactionRows = transactionsForAccount.map((transaction) => {
@@ -73,9 +72,8 @@ export default function Accounts() {
 
     return (
       <div key={account.id}>
-        <>
           <p><b>Transactions for account:</b> {account.name} ({transactionsForAccount.length})</p>
-          <Table 
+          <Table
             headers={(
             <>
               <TableHeader>Date</TableHeader>
@@ -84,14 +82,13 @@ export default function Accounts() {
               <TableHeader>Outflow</TableHeader>
               <TableHeader>Inflow</TableHeader>
             </>)}
-            rows={transactionRows} 
-          />          
-        </>
+            rows={transactionRows}
+          />
       </div>
     )
   }
 
-    return (
+  return (
       <>
         <h1 className="text-xl font-bold">Accounts</h1>
         <div><button className="" onClick={importData}>Import</button></div>
@@ -99,5 +96,5 @@ export default function Accounts() {
           {accounts.map((account) => accountItem(account))}
         </div>
       </>
-    )
+  )
 }

@@ -1,10 +1,10 @@
 interface IProps {
-    headers: React.ReactNode
-    rows: React.ReactNode
+  headers: React.ReactNode
+  rows: React.ReactNode
 }
 
-export default function Index({ rows, headers }: IProps) {
-    return (
+export default function Index ({ rows, headers }: IProps) {
+  return (
         <table className="table-auto w-full">
             <thead>
                 <tr>
@@ -15,5 +15,5 @@ export default function Index({ rows, headers }: IProps) {
                 {rows}
             </tbody>
         </table>
-    )
+  )
 }

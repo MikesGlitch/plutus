@@ -1,7 +1,7 @@
-import { PropsWithChildren } from "react"
+import { PropsWithChildren } from 'react'
 
 interface IProps { }
 
-export default function TableData(props: PropsWithChildren<IProps>) {
-    return (<td>{props.children}</td>)
-  }
+export default function TableData (props: PropsWithChildren<IProps>) {
+  return (<td>{props.children}</td>)
+}

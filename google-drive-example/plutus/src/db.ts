@@ -1,5 +1,5 @@
 
-import Dexie, { Table } from 'dexie';
+import Dexie, { Table } from 'dexie'
 
 export interface IUser {
   id?: number // apparently needs to be nullable for inserts???  ANNOYING!
@@ -15,10 +15,10 @@ export const OAccountType = {
   CreditCard: 'CreditCard',
   ISA: 'ISA',
   GeneralInvestment: 'GIA',
-  Pension: 'Pension',
+  Pension: 'Pension'
 } as const
 
-export type AccountType = typeof OAccountType[keyof typeof OAccountType];
+export type AccountType = typeof OAccountType[keyof typeof OAccountType]
 
 export interface IAccount {
   id?: number // apparently needs to be nullable for inserts???  ANNOYING!
@@ -35,30 +35,30 @@ export interface ITransaction {
   id?: number // apparently needs to be nullable for inserts???  ANNOYING!
   accountId: IAccount['id']
   categoryId: ICategory['id']
-  amount: string, // currency lib like https://currency.js.org/? Should fix problems like: console.log(.1 + .2); // 0.30000000000000004
-  description: string,
-  notes: string,
-  date: string,
+  amount: string // currency lib like https://currency.js.org/? Should fix problems like: console.log(.1 + .2); // 0.30000000000000004
+  description: string
+  notes: string
+  date: string
   cleared: boolean
 }
 
 export class MySubClassedDexie extends Dexie {
   // 'users' is added by dexie when declaring the stores()
   // We just tell the typing system this is the case
-  users!: Table<IUser>; 
-  categories!: Table<ICategory>; 
-  accounts!: Table<IAccount>; 
-  transactions!: Table<ITransaction>; 
+  users!: Table<IUser>
+  categories!: Table<ICategory>
+  accounts!: Table<IAccount>
+  transactions!: Table<ITransaction>
 
-  constructor() {
-    super('plutus');
+  constructor () {
+    super('plutus')
     this.version(1).stores({
       users: '++id, username', // Primary key and indexed props
       accounts: '++id, type', // Primary key and indexed props
       categories: '++id, name', // Primary key and indexed props
       transactions: '++id, accountId, categoryId' // Primary key and indexed props
-    });
+    })
   }
 }
 
-export const db = new MySubClassedDexie();
+export const db = new MySubClassedDexie()

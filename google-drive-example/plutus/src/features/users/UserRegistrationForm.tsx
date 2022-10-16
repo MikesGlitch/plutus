@@ -1,37 +1,36 @@
-import { useState } from "react";
-import { db, IUser } from "../../db";
+import { useState } from 'react'
+import { db, IUser } from '../../db'
 
-function UserRegistrationForm() {
+function UserRegistrationForm () {
+  const [username, setUsername] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [age, setAge] = useState<number>()
+  const [status, setStatus] = useState('')
 
-  const [username, setUsername] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [age, setAge] = useState<number>();
-  const [status, setStatus] = useState("");
-  
-  async function addUser() {
+  async function addUser () {
     try {
-      if(!age) {
+      if (age === undefined) {
         // validation
         console.error('invalid entry')
         return
       }
 
       const newUser: IUser = {
-        username: username,
-        firstName: firstName,
-        lastName: lastName,
-        age: age,
+        username,
+        firstName,
+        lastName,
+        age
       }
-      const id = await db.users.add(newUser);
+      const id = await db.users.add(newUser)
 
-      setStatus(`${newUser.username} successfully added. Got id ${id}`);
+      setStatus(`${newUser.username} successfully added. Got id ${id as number}`)
     } catch (error) {
-      setStatus(`Failed to add ${name}: ${error}`);
+      setStatus(`Failed to add ${username}`)
     }
   }
 
-    return (
+  return (
       <>
         <h1>User Registration</h1>
         <p>
@@ -61,12 +60,12 @@ function UserRegistrationForm() {
           value={age}
           onChange={ev => setAge(Number(ev.target.value))}
         />
-        
+
         <button onClick={addUser}>
           Add
         </button>
       </>
-    )
+  )
 }
 
 export default UserRegistrationForm
