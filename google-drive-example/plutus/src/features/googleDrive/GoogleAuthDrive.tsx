@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import './App.css'
 import ListFiles from '../../ListFiles'
 import { config } from '../../../config'
 

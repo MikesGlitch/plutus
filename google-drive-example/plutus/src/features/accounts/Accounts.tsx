@@ -70,18 +70,19 @@ export default function Accounts () {
       )
     })
 
+    const headers = [
+      (<TableHeader key={'date'}>Date</TableHeader>),
+      (<TableHeader key={'payee'}>Payee</TableHeader>),
+      (<TableHeader key={'category'}>Category</TableHeader>),
+      (<TableHeader key={'outflow'}>Outflow</TableHeader>),
+      (<TableHeader key={'inflow'}>Inflow</TableHeader>)
+    ]
+
     return (
       <div key={account.id}>
           <p><b>Transactions for account:</b> {account.name} ({transactionsForAccount.length})</p>
           <Table
-            headers={(
-            <>
-              <TableHeader>Date</TableHeader>
-              <TableHeader>Payee</TableHeader>
-              <TableHeader>Category</TableHeader>
-              <TableHeader>Outflow</TableHeader>
-              <TableHeader>Inflow</TableHeader>
-            </>)}
+            headers={headers}
             rows={transactionRows}
           />
       </div>
