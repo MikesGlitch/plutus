@@ -1,13 +1,16 @@
-import { useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { db, IAccount, ICategory, ITransaction, OAccountType } from '../../db'
 import Table from '@/components/Table'
 import TableData from '@/components/Table/TableData'
 import TableHeader from '@/components/Table/TableHeader'
+import { useCurrency } from '@/hooks/useCurrency'
 
 export default function Accounts () {
   const [accounts, setAccounts] = useState<IAccount[]>([])
   const [categories, setCategories] = useState<ICategory[]>([])
   const [transactions, setTransactions] = useState<ITransaction[]>([])
+  const [testMoneyInput, setTestMoneyInput] = useState<string>()
+  const { fromPenniesToCurrency, toPennies, isValidCurrency } = useCurrency()
 
   async function importData () {
     const accounts: IAccount[] = [
@@ -31,7 +34,7 @@ export default function Accounts () {
     setCategories(categories)
 
     const transactions: ITransaction[] = [
-      { accountId: 1, amount: '10.23', categoryId: 1, cleared: true, date: '2022-10-09', description: 'imported', notes: '' }
+      { accountId: 1, amountPennies: 1023, categoryId: 1, cleared: true, date: '2022-10-09', description: 'imported', notes: '' }
     ]
     await db.transactions.bulkAdd(transactions)
     setTransactions(transactions)
@@ -64,7 +67,7 @@ export default function Accounts () {
           <TableData>{transaction.date}</TableData>
           <TableData>dont have</TableData>
           <TableData>{categoryForTransaction?.name}</TableData>
-          <TableData>{transaction.amount}</TableData>
+          <TableData>{fromPenniesToCurrency(transaction.amountPennies)}</TableData>
           <TableData>dont really have</TableData>
         </tr>
       )
@@ -89,10 +92,26 @@ export default function Accounts () {
     )
   }
 
+  function changeMoneyInput (event: ChangeEvent<HTMLInputElement>) {
+    setTestMoneyInput(event.target.value)
+  }
+
+  const testMoneyValid = testMoneyInput === undefined ? true : isValidCurrency(testMoneyInput)
+
   return (
       <>
         <h1 className="text-xl font-bold">Accounts</h1>
         <div><button className="" onClick={importData}>Import</button></div>
+        <div className="flex flex-col gap-4 items-center justify-center w-full">
+          <input
+            type="number"
+            step={undefined}
+            className={`border w-1/2 px-4 py-2 ${testMoneyValid ? 'border-gray-500' : 'border-red-600'}`}
+            placeholder='Enter human readable currency value'
+            value={testMoneyInput}
+            onChange={changeMoneyInput} />
+          <p><span className='font-bold'>Formatted</span> {testMoneyValid && testMoneyInput !== undefined ? toPennies(testMoneyInput) : 'Invalid input' }</p>
+        </div>
         <div className="flex flex-col gap-6">
           {accounts.map((account) => accountItem(account))}
         </div>

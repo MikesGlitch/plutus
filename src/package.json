@@ -10,6 +10,7 @@
     "lint": "eslint --ext .js,.ts,.tsx,.jsx --fix src"
   },
   "dependencies": {
+    "currency.js": "^2.0.4",
     "dexie": "^3.2.2",
     "dexie-react-hooks": "^1.1.1",
     "lodash-es": "^4.17.21",

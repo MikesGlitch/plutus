@@ -4,14 +4,14 @@ interface IProps {
 }
 
 function EmptyMessage (numColumns: number) {
-  return (<td colSpan={numColumns}>No records found.</td>)
+  return (<tr><td colSpan={numColumns}>No records found.</td></tr>)
 }
 
 export default function Index ({ rows, headers }: IProps) {
   const tableRows = rows.length > 0 ? rows : EmptyMessage(headers.length)
   return (
     <div className="rounded-xl border-black border-2">
-      <table className="table-auto w-full">
+      <table className="table-auto w-full text-center">
         <thead>
           <tr className="border-b-2 border-black">
             { headers }

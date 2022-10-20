@@ -35,7 +35,7 @@ export interface ITransaction {
   id?: number // apparently needs to be nullable for inserts???  ANNOYING!
   accountId: IAccount['id']
   categoryId: ICategory['id']
-  amount: string // currency lib like https://currency.js.org/? Should fix problems like: console.log(.1 + .2); // 0.30000000000000004
+  amountPennies: number // stored in pennied as numeric to respect precision. Formatting applied on display
   description: string
   notes: string
   date: string
