@@ -103,6 +103,7 @@ export default function Accounts () {
         <h1 className="text-xl font-bold">Accounts</h1>
         <div><button className="" onClick={importData}>Import</button></div>
         <div className="flex flex-col gap-4 items-center justify-center w-full">
+          <p className=" text-4xl font-bold text-red-600">Make an input currency component like this - should not allow entering invalid values - should probably lock in 2 decimal places: https://primefaces.org/primevue/inputnumber </p>
           <input
             type="number"
             step={undefined}

@@ -1,3 +1,4 @@
+import { visualizer } from "rollup-plugin-visualizer";
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
@@ -8,6 +9,15 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+    }
+  },
+  build: {
+    rollupOptions: {
+      plugins: [visualizer({
+        template: "treemap",
+        gzipSize: true,
+        open: true
+      })]
     }
   }
 })
