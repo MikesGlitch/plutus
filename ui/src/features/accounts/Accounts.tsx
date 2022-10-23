@@ -105,6 +105,7 @@ export default function Accounts () {
         <div className="flex flex-col gap-4 items-center justify-center w-full">
           <p className=" text-4xl font-bold text-red-600">Focus on writing the ui for the month budget section - forget currency for now. think in the background and tackle it later</p>
           <p className=" text-4xl font-bold text-red-600">Add a i18n lib - for code we will keep - https://react.i18next.com/latest/using-with-hooks</p>
+          <p className=" text-4xl font-bold text-red-600">Number formatter: https://github.com/actualbudget/actual/blob/de232b3ff05fad8b67dd295057cd30d3ee42c5ac/packages/loot-core/src/shared/util.js#L311</p>
           <p className=" text-2xl font-bold text-red-600">React hook form: https://react-hook-form.com/</p>
           <p className=" text-xl font-bold text-red-600">Make an input currency component like this - should not allow entering invalid values - should probably lock in 2 decimal places: https://primefaces.org/primevue/inputnumber </p>
           <input

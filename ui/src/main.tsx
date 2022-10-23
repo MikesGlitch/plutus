@@ -4,6 +4,7 @@ import App from './App'
 import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Accounts from './features/accounts/Accounts'
+import Budget from './features/budget'
 
 const router = createBrowserRouter([
   {
@@ -16,7 +17,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'budget',
-        element: <h1>Budget</h1>
+        element: <Budget />
       },
       {
         path: 'reports',
