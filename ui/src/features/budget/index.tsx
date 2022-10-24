@@ -1,14 +1,18 @@
+import InputCurrency from '@/components/Form/InputCurrency'
 import { useEffect, useState } from 'react'
 
 function HeaderCell ({ name }: { name: string }) {
   return (<div className="outline outline-1 outline-gray-300 px-2 font-bold">{ name }</div>)
 }
 
-function Cell ({ title }: { title: string }) {
-  return (<div className="outline outline-1 outline-gray-300 px-2">{ title }</div>)
+function Cell ({ value, onChangeValue }: { value: number, onChangeValue: (newValue: number) => void }) {
+  return (
+    <div className="outline outline-1 outline-gray-300">
+      <InputCurrency value={value} onChange={onChangeValue} />
+    </div>)
 }
 
-function DataGrid ({ columns, rows }: { rows: any[], columns: any[] }) {
+function DataGrid ({ columns, rows, onRowsChange }: { rows: any[], columns: any[], onRowsChange: (rows: any[]) => void }) {
   return (
     <div className='grid text-right' style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr)` }}>
       <div className='contents'>
@@ -21,7 +25,7 @@ function DataGrid ({ columns, rows }: { rows: any[], columns: any[] }) {
           return (<div className='contents' key={row.id}>
             {columns.map((column) => {
               const rowValueForColumn = row[column.key]
-              return (<Cell key={column.key} title={rowValueForColumn}></Cell>)
+              return (<Cell key={column.key} value={rowValueForColumn} onChangeValue={(newValue) => onRowsChange([])}></Cell>)
             })}
           </div>)
         }) }
@@ -41,7 +45,7 @@ function Budget () {
     setCategoryRows([{ category: 'Category 1' }, { category: 'Category 2' }, { category: 'Category 3' }])
 
     setColumns([{ key: 'budgeted', name: 'Budgeted' }, { key: 'outflows', name: 'Outflows' }, { key: 'balance', name: 'Balance' }])
-    setRows([{ budgeted: 'budgeted 1', outflows: 'outflow 1', balance: 'balance 1' }, { budgeted: 'budgeted 2', outflows: 'outflow 2', balance: 'balance 2' }, { budgeted: 'budgeted 3', outflows: 'outflow 3', balance: 'balance 3' }])
+    setRows([{ budgeted: 1.22, outflows: 9, balance: -1.25 }, { budgeted: 58, outflows: 33.25, balance: -98.25 }, { budgeted: 5522.25, outflows: 12.32, balance: 21.25 }])
   }, [])
 
   return (
@@ -49,13 +53,13 @@ function Budget () {
         <h1>Budget - similar to <a href="https://github.com/adazzle/react-data-grid">https://github.com/adazzle/react-data-grid</a></h1>
         <div className='flex gap-4'>
           <div className='w-64'>
-            <DataGrid rows={categoryRows} columns={categoryColumns}></DataGrid>
+            <DataGrid rows={categoryRows} columns={categoryColumns} onRowsChange={(newRows) => { return newRows } }></DataGrid>
           </div>
           <div className='grid grid-cols-4 gap-4'>
-            <DataGrid rows={rows} columns={columns}></DataGrid>
-            <DataGrid rows={rows} columns={columns}></DataGrid>
-            <DataGrid rows={rows} columns={columns}></DataGrid>
-            <DataGrid rows={rows} columns={columns}></DataGrid>
+            <DataGrid rows={rows} columns={columns} onRowsChange={setRows}></DataGrid>
+            <DataGrid rows={rows} columns={columns} onRowsChange={setRows}></DataGrid>
+            <DataGrid rows={rows} columns={columns} onRowsChange={setRows}></DataGrid>
+            <DataGrid rows={rows} columns={columns} onRowsChange={setRows}></DataGrid>
           </div>
         </div>
       </>

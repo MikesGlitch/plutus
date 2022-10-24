@@ -1,16 +1,17 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { db, IAccount, ICategory, ITransaction, OAccountType } from '../../db'
 import Table from '@/components/Table'
 import TableData from '@/components/Table/TableData'
 import TableHeader from '@/components/Table/TableHeader'
 import { useCurrency } from '@/hooks/useCurrency'
+import InputCurrency from '@/components/Form/InputCurrency'
 
 export default function Accounts () {
   const [accounts, setAccounts] = useState<IAccount[]>([])
   const [categories, setCategories] = useState<ICategory[]>([])
   const [transactions, setTransactions] = useState<ITransaction[]>([])
-  const [testMoneyInput, setTestMoneyInput] = useState<string>()
-  const { fromPenniesToCurrency, toPennies, isValidCurrency } = useCurrency()
+  const [testMoneyInput, setTestMoneyInput] = useState<number>()
+  const { fromPenniesToCurrency } = useCurrency()
 
   async function importData () {
     const accounts: IAccount[] = [
@@ -92,11 +93,11 @@ export default function Accounts () {
     )
   }
 
-  function changeMoneyInput (event: ChangeEvent<HTMLInputElement>) {
-    setTestMoneyInput(event.target.value)
-  }
+  // function changeMoneyInput (event: ChangeEvent<HTMLInputElement>) {
+  //   setTestMoneyInput(event.target.value)
+  // }
 
-  const testMoneyValid = testMoneyInput === undefined ? true : isValidCurrency(testMoneyInput)
+  // const testMoneyValid = testMoneyInput === undefined ? true : isValidCurrency(testMoneyInput)
 
   return (
       <>
@@ -108,14 +109,15 @@ export default function Accounts () {
           <p className=" text-4xl font-bold text-red-600">Number formatter: https://github.com/actualbudget/actual/blob/de232b3ff05fad8b67dd295057cd30d3ee42c5ac/packages/loot-core/src/shared/util.js#L311</p>
           <p className=" text-2xl font-bold text-red-600">React hook form: https://react-hook-form.com/</p>
           <p className=" text-xl font-bold text-red-600">Make an input currency component like this - should not allow entering invalid values - should probably lock in 2 decimal places: https://primefaces.org/primevue/inputnumber </p>
-          <input
+          <InputCurrency value={testMoneyInput} onChange={(newValue) => setTestMoneyInput(newValue)} />
+          {/* <input
             type="number"
             step={undefined}
             className={`border w-1/2 px-4 py-2 ${testMoneyValid ? 'border-gray-500' : 'border-red-600'}`}
             placeholder='Enter human readable currency value'
             value={testMoneyInput}
-            onChange={changeMoneyInput} />
-          <p><span className='font-bold'>Formatted</span> {testMoneyValid && testMoneyInput !== undefined ? toPennies(testMoneyInput) : 'Invalid input' }</p>
+            onChange={changeMoneyInput} /> */}
+          {/* <p><span className='font-bold'>Formatted</span> {testMoneyValid && testMoneyInput !== undefined ? toPennies(testMoneyInput) : 'Invalid input' }</p> */}
         </div>
         <div className="flex flex-col gap-6">
           {accounts.map((account) => accountItem(account))}
