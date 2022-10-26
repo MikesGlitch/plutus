@@ -21,11 +21,28 @@ function DataGrid ({ columns, rows, onRowsChange }: { rows: any[], columns: any[
         }) }
       </div>
       <div className='contents'>
-        { rows.map((row) => {
-          return (<div className='contents' key={row.id}>
+        { rows.map((row, rowIndex) => {
+          return (<div className='contents' key={rowIndex}>
             {columns.map((column) => {
               const rowValueForColumn = row[column.key]
-              return (<Cell key={column.key} value={rowValueForColumn} onChangeValue={(newValue) => onRowsChange([])}></Cell>)
+              function onRowValueChange (newValue: number) {
+                const allRowsWithUpdates: any[] = []
+                // could optimise this a lot
+                rows.forEach((row, indexTemp) => {
+                  if (rowIndex === indexTemp) {
+                    console.log('found the row update', row, row[column.key])
+                    allRowsWithUpdates.push({
+                      ...row,
+                      [column.key]: newValue
+                    })
+                  } else {
+                    allRowsWithUpdates.push(row)
+                  }
+                })
+                onRowsChange(allRowsWithUpdates)
+              }
+
+              return (<Cell key={column.key} value={rowValueForColumn} onChangeValue={(newValue) => onRowValueChange(newValue)}></Cell>)
             })}
           </div>)
         }) }
@@ -56,9 +73,6 @@ function Budget () {
             <DataGrid rows={categoryRows} columns={categoryColumns} onRowsChange={(newRows) => { return newRows } }></DataGrid>
           </div>
           <div className='grid grid-cols-4 gap-4'>
-            <DataGrid rows={rows} columns={columns} onRowsChange={setRows}></DataGrid>
-            <DataGrid rows={rows} columns={columns} onRowsChange={setRows}></DataGrid>
-            <DataGrid rows={rows} columns={columns} onRowsChange={setRows}></DataGrid>
             <DataGrid rows={rows} columns={columns} onRowsChange={setRows}></DataGrid>
           </div>
         </div>
