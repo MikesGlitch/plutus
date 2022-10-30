@@ -2,18 +2,21 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import Accounts from './features/accounts/Accounts'
+import { RouterProvider, createBrowserRouter, Navigate } from 'react-router-dom'
+import Accounts from './features/accounts'
 import Budget from './features/budget'
+import UpcomingFeatures from './features/upcoming-features'
+import TheFallback from './TheFallback'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    errorElement: <TheFallback />,
     children: [
       {
-        path: '',
-        element: <h1>Home page - perhaps it goes to the last page you were on or maybe the budget</h1>
+        index: true,
+        element: <Navigate to="/budget" replace />
       },
       {
         path: 'budget',
@@ -26,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: 'accounts',
         element: <Accounts />
+      },
+      {
+        path: 'upcoming-features',
+        element: <UpcomingFeatures />
       }
     ]
   }
