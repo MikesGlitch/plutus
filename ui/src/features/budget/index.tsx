@@ -1,5 +1,5 @@
 import InputCurrency from '@/components/Form/InputCurrency'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { db } from '../../db'
 
 function HeaderCell ({ name }: { name: string }) {
@@ -13,7 +13,7 @@ function Cell ({ value, onChangeValue }: { value: number, onChangeValue: (newVal
     </div>)
 }
 
-function DataGrid ({ columns, rows, onRowsChange }: { rows: any[], columns: any[], onRowsChange: (rows: any[]) => void }) {
+function DataGrid ({ columns, rows, onRowsChange, rowRenderer }: { rows: any[], columns: any[], onRowsChange: (rows: any[]) => void, rowRenderer: (key: React.Key, props: IDataGridRow, onRowsChange: (rows: any[]) => void) => React.ReactNode }) {
   return (
     <div className='grid text-right' style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr)` }}>
       <div className='contents'>
@@ -24,27 +24,7 @@ function DataGrid ({ columns, rows, onRowsChange }: { rows: any[], columns: any[
       <div className='contents'>
         { rows.map((row, rowIndex) => {
           return (<div className='contents' key={rowIndex}>
-            {columns.map((column) => {
-              const rowValueForColumn = row[column.key]
-              function onRowValueChange (newValue: number) {
-                const allRowsWithUpdates: any[] = []
-                // could optimise this a lot
-                rows.forEach((row, indexTemp) => {
-                  if (rowIndex === indexTemp) {
-                    console.log('found the row update', row, row[column.key])
-                    allRowsWithUpdates.push({
-                      ...row,
-                      [column.key]: newValue
-                    })
-                  } else {
-                    allRowsWithUpdates.push(row)
-                  }
-                })
-                onRowsChange(allRowsWithUpdates)
-              }
-
-              return (<Cell key={column.key} value={rowValueForColumn} onChangeValue={(newValue) => onRowValueChange(newValue)}></Cell>)
-            })}
+            {rowRenderer(rowIndex, row, onRowsChange)}
           </div>)
         }) }
       </div>
@@ -52,19 +32,15 @@ function DataGrid ({ columns, rows, onRowsChange }: { rows: any[], columns: any[
   )
 }
 
+export interface IDataGridRow {
+  [key: string]: any
+}
+
 function Budget () {
   const [categoryColumns, setCategoryColumns] = useState<any[]>([])
-  const [categoryRows, setCategoryRows] = useState<any[]>([])
+  const [categoryRows, setCategoryRows] = useState<IDataGridRow[]>([])
   const [columns, setColumns] = useState<any[]>([])
-  const [rows, setRows] = useState<any[]>([])
-
-  useEffect(() => {
-    // setCategoryColumns([{ key: 'category', name: 'Category' }])
-    // setCategoryRows([{ category: 'Category 1' }, { category: 'Category 2' }, { category: 'Category 3' }])
-
-    // setColumns([{ key: 'budgeted', name: 'Budgeted' }, { key: 'outflows', name: 'Outflows' }, { key: 'balance', name: 'Balance' }])
-    // setRows([{ budgeted: 1.22, outflows: 9, balance: -1.25 }, { budgeted: 58, outflows: 33.25, balance: -98.25 }, { budgeted: 5522.25, outflows: 12.32, balance: 21.25 }])
-  }, [])
+  const [rows, setRows] = useState<IDataGridRow[]>([])
 
   useEffect(() => {
     async function getBudget () {
@@ -104,16 +80,64 @@ function Budget () {
     getBudget()
   }, [])
 
+  function renderBudgetRow (rowIndex: React.Key, row: IDataGridRow, onRowsChange: (rows: any[]) => void) {
+    // Move the onrows change logic out and into datagrid and use Provider https://reactjs.org/docs/context.html#when-to-use-context
+    // function myRowRenderer(key: React.Key, props: RowRendererProps<Row>) {
+    //   return (
+    //     <MyContext.Provider key={key} value={123}>
+    //       <Row {...props} />
+    //     </MyContext.Provider>
+    //   );
+    // }
+
+    function onRowValueChange (columnKey: string, newValue: number) {
+      const allRowsWithUpdates: any[] = []
+      // could optimise this a lot
+      rows.forEach((row, indexTemp) => {
+        if (rowIndex === indexTemp) {
+          console.log('found the row update', row, row[columnKey])
+          allRowsWithUpdates.push({
+            ...row,
+            [columnKey]: newValue
+          })
+        } else {
+          allRowsWithUpdates.push(row)
+        }
+      })
+      onRowsChange(allRowsWithUpdates)
+    }
+
+    return (
+      Object.keys(row).map((columnKey, rowIndex) => {
+        const rowValueForColumn = row[columnKey]
+        return (<Cell key={columnKey} value={rowValueForColumn} onChangeValue={(newValue) => onRowValueChange(columnKey, newValue)}></Cell>)
+      })
+    )
+  }
+
+  function renderCategoryRow (rowIndex: React.Key, row: IDataGridRow, onRowsChange: (rows: any[]) => void) {
+    return (
+      Object.keys(row).map((columnKey, rowIndex) => {
+        const rowValueForColumn = row[columnKey]
+        return (
+          <div key={columnKey} className="outline outline-1 outline-gray-300">
+            <input type={'text'} className="w-full border px-4 py-2 border-gray-500" value={rowValueForColumn} />
+          </div>
+        )
+      })
+    )
+  }
+
   return (
       <>
         <h1>Budget - similar to <a href="https://github.com/adazzle/react-data-grid">https://github.com/adazzle/react-data-grid</a></h1>
         <pre>Categories: { JSON.stringify(categoryRows) }</pre>
         <div className='flex gap-4'>
           <div className='w-64'>
-            <DataGrid rows={categoryRows} columns={categoryColumns} onRowsChange={(newRows) => { return newRows } }></DataGrid>
+            <DataGrid rows={categoryRows} columns={categoryColumns} onRowsChange={(newRows) => { return newRows } } rowRenderer={renderCategoryRow}></DataGrid>
           </div>
           <div className='grid grid-cols-4 gap-4'>
-            <DataGrid rows={rows} columns={columns} onRowsChange={setRows}></DataGrid>
+            <DataGrid rows={rows} columns={columns} onRowsChange={setRows} rowRenderer={renderBudgetRow}></DataGrid>
           </div>
         </div>
       </>
