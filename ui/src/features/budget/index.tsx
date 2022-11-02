@@ -1,4 +1,5 @@
 import InputCurrency from '@/components/Form/InputCurrency'
+import InputText from '@/components/Form/InputText'
 import React, { useEffect, useState } from 'react'
 import { db } from '../../db'
 
@@ -91,17 +92,16 @@ function Budget () {
     // }
 
     function onRowValueChange (columnKey: string, newValue: number) {
-      const allRowsWithUpdates: any[] = []
-      // could optimise this a lot
-      rows.forEach((row, indexTemp) => {
-        if (rowIndex === indexTemp) {
-          console.log('found the row update', row, row[columnKey])
-          allRowsWithUpdates.push({
-            ...row,
-            [columnKey]: newValue
-          })
-        } else {
-          allRowsWithUpdates.push(row)
+      // Can this be split out into a util so I don't repeat it?
+      const allRowsWithUpdates = rows.map((row, indexTemp) => {
+        if (rowIndex !== indexTemp) {
+          return row // not updating this one, leave it
+        }
+
+        console.log('found the row update', row, row[columnKey])
+        return {
+          ...row,
+          [columnKey]: newValue
         }
       })
       onRowsChange(allRowsWithUpdates)
@@ -116,15 +116,29 @@ function Budget () {
   }
 
   function renderCategoryRow (rowIndex: React.Key, row: IDataGridRow, onRowsChange: (rows: any[]) => void) {
-    return (
-      Object.keys(row).map((columnKey, rowIndex) => {
-        const rowValueForColumn = row[columnKey]
-        return (
-          <div key={columnKey} className="outline outline-1 outline-gray-300">
-            <input type={'text'} className="w-full border px-4 py-2 border-gray-500" value={rowValueForColumn} />
-          </div>
-        )
+    function onRowValueChange (columnKey: string, newValue: string) {
+      // Can this be split out into a util so I don't repeat it?
+      const allRowsWithUpdates = categoryRows.map((row, indexTemp) => {
+        if (rowIndex !== indexTemp) {
+          return row // not updating this one, leave it
+        }
+
+        console.log('found the category row update', row, row[columnKey], newValue)
+        return {
+          ...row,
+          [columnKey]: newValue
+        }
       })
+
+      console.log(allRowsWithUpdates)
+
+      onRowsChange(allRowsWithUpdates)
+    }
+
+    return (
+      <div key={rowIndex} className="outline outline-1 outline-gray-300">
+        <InputText value={row.category} onChange={(newValue) => onRowValueChange('category', newValue)} />
+      </div>
     )
   }
 
@@ -134,7 +148,7 @@ function Budget () {
         <pre>Categories: { JSON.stringify(categoryRows) }</pre>
         <div className='flex gap-4'>
           <div className='w-64'>
-            <DataGrid rows={categoryRows} columns={categoryColumns} onRowsChange={(newRows) => { return newRows } } rowRenderer={renderCategoryRow}></DataGrid>
+            <DataGrid rows={categoryRows} columns={categoryColumns} onRowsChange={setCategoryRows} rowRenderer={renderCategoryRow}></DataGrid>
           </div>
           <div className='grid grid-cols-4 gap-4'>
             <DataGrid rows={rows} columns={columns} onRowsChange={setRows} rowRenderer={renderBudgetRow}></DataGrid>
