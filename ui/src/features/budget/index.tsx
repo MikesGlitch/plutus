@@ -1,41 +1,9 @@
+import DataGrid, { IDataGridRow } from '@/components/DataGrid'
+import RowCell from '@/components/DataGrid/RowCell'
 import InputCurrency from '@/components/Form/InputCurrency'
 import InputText from '@/components/Form/InputText'
 import React, { useEffect, useState } from 'react'
 import { db } from '../../db'
-
-function HeaderCell ({ name }: { name: string }) {
-  return (<div className="outline outline-1 outline-gray-300 px-2 font-bold">{ name }</div>)
-}
-
-function Cell ({ value, onChangeValue }: { value: number, onChangeValue: (newValue: number) => void }) {
-  return (
-    <div className="outline outline-1 outline-gray-300">
-      <InputCurrency value={value} onChange={onChangeValue} />
-    </div>)
-}
-
-function DataGrid ({ columns, rows, onRowsChange, rowRenderer }: { rows: any[], columns: any[], onRowsChange: (rows: any[]) => void, rowRenderer: (key: React.Key, props: IDataGridRow, onRowsChange: (rows: any[]) => void) => React.ReactNode }) {
-  return (
-    <div className='grid text-right' style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr)` }}>
-      <div className='contents'>
-        { columns.map((column) => {
-          return (<HeaderCell key={column.key} name={column.name}></HeaderCell>)
-        }) }
-      </div>
-      <div className='contents'>
-        { rows.map((row, rowIndex) => {
-          return (<div className='contents' key={rowIndex}>
-            {rowRenderer(rowIndex, row, onRowsChange)}
-          </div>)
-        }) }
-      </div>
-    </div>
-  )
-}
-
-export interface IDataGridRow {
-  [key: string]: any
-}
 
 function Budget () {
   const [categoryColumns, setCategoryColumns] = useState<any[]>([])
@@ -108,9 +76,12 @@ function Budget () {
     }
 
     return (
-      Object.keys(row).map((columnKey, rowIndex) => {
+      Object.keys(row).map((columnKey) => {
         const rowValueForColumn = row[columnKey]
-        return (<Cell key={columnKey} value={rowValueForColumn} onChangeValue={(newValue) => onRowValueChange(columnKey, newValue)}></Cell>)
+        return (
+          <RowCell key={columnKey}>
+            <InputCurrency value={rowValueForColumn} onChange={(newValue) => onRowValueChange(columnKey, newValue)}/>
+          </RowCell>)
       })
     )
   }
