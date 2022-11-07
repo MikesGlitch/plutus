@@ -50,28 +50,18 @@ function Budget () {
   }, [])
 
   function renderBudgetRow (rowIndex: React.Key, row: IDataGridRow, onRowsChange: (rows: any[]) => void) {
-    // Move the onrows change logic out and into datagrid and use Provider https://reactjs.org/docs/context.html#when-to-use-context
-    // function myRowRenderer(key: React.Key, props: RowRendererProps<Row>) {
-    //   return (
-    //     <MyContext.Provider key={key} value={123}>
-    //       <Row {...props} />
-    //     </MyContext.Provider>
-    //   );
-    // }
-
     function onRowValueChange (columnKey: string, newValue: number) {
-      // Can this be split out into a util so I don't repeat it?
       const allRowsWithUpdates = rows.map((row, indexTemp) => {
         if (rowIndex !== indexTemp) {
           return row // not updating this one, leave it
         }
 
-        console.log('found the row update', row, row[columnKey])
         return {
           ...row,
           [columnKey]: newValue
         }
       })
+
       onRowsChange(allRowsWithUpdates)
     }
 
@@ -88,20 +78,16 @@ function Budget () {
 
   function renderCategoryRow (rowIndex: React.Key, row: IDataGridRow, onRowsChange: (rows: any[]) => void) {
     function onRowValueChange (columnKey: string, newValue: string) {
-      // Can this be split out into a util so I don't repeat it?
       const allRowsWithUpdates = categoryRows.map((row, indexTemp) => {
         if (rowIndex !== indexTemp) {
           return row // not updating this one, leave it
         }
 
-        console.log('found the category row update', row, row[columnKey], newValue)
         return {
           ...row,
           [columnKey]: newValue
         }
       })
-
-      console.log(allRowsWithUpdates)
 
       onRowsChange(allRowsWithUpdates)
     }

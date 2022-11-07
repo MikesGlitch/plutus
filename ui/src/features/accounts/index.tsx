@@ -93,26 +93,12 @@ export default function Accounts () {
     )
   }
 
-  // function changeMoneyInput (event: ChangeEvent<HTMLInputElement>) {
-  //   setTestMoneyInput(event.target.value)
-  // }
-
-  // const testMoneyValid = testMoneyInput === undefined ? true : isValidCurrency(testMoneyInput)
-
   return (
       <>
         <h1 className="text-xl font-bold">Accounts</h1>
         <div><button className="" onClick={importData}>Import</button></div>
         <div className="flex flex-col gap-4 items-center justify-center w-full">
           <InputCurrency value={testMoneyInput} onChange={(newValue) => setTestMoneyInput(newValue)} />
-          {/* <input
-            type="number"
-            step={undefined}
-            className={`border w-1/2 px-4 py-2 ${testMoneyValid ? 'border-gray-500' : 'border-red-600'}`}
-            placeholder='Enter human readable currency value'
-            value={testMoneyInput}
-            onChange={changeMoneyInput} /> */}
-          {/* <p><span className='font-bold'>Formatted</span> {testMoneyValid && testMoneyInput !== undefined ? toPennies(testMoneyInput) : 'Invalid input' }</p> */}
         </div>
         <div className="flex flex-col gap-6">
           {accounts.map((account) => accountItem(account))}
