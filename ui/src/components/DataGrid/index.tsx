@@ -1,17 +1,18 @@
 import HeaderCell from './HeaderCell'
 
-export interface IDataGridRow {
-  [key: string]: any
+export interface IDataGridColumn {
+  key: string
+  name: string
 }
 
-export interface IProps {
-  rows: any[]
-  columns: any[]
-  onRowsChange: (rows: any[]) => void
-  rowRenderer: (key: React.Key, props: IDataGridRow, onRowsChange: (rows: any[]) => void) => React.ReactNode
+export interface IProps<TColumn, TRow> {
+  rows: TRow[]
+  columns: TColumn[]
+  onRowsChange: (rows: TRow[]) => void
+  rowRenderer: (key: React.Key, props: TRow, onRowsChange: (rows: TRow[]) => void) => React.ReactNode
 }
 
-export default function DataGrid ({ columns, rows, onRowsChange, rowRenderer }: IProps) {
+export default function DataGrid<TRow> ({ columns, rows, onRowsChange, rowRenderer }: IProps<IDataGridColumn, TRow>) {
   return (
     <div className='grid text-right' style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr)` }}>
       <div className='contents'>

@@ -1,4 +1,4 @@
-import DataGrid, { IDataGridRow } from '@/components/DataGrid'
+import DataGrid, { IDataGridColumn } from '@/components/DataGrid'
 import RowCell from '@/components/DataGrid/RowCell'
 import InputCurrency from '@/components/Form/InputCurrency'
 import InputText from '@/components/Form/InputText'
@@ -6,10 +6,19 @@ import React, { useEffect, useState } from 'react'
 import { db } from '../../db'
 
 function Budget () {
-  const [categoryColumns, setCategoryColumns] = useState<any[]>([])
-  const [categoryRows, setCategoryRows] = useState<IDataGridRow[]>([])
-  const [columns, setColumns] = useState<any[]>([])
-  const [rows, setRows] = useState<IDataGridRow[]>([])
+  interface IBudgetRow {
+    budgeted?: number
+    outflows: number
+  }
+
+  interface ICategoryRow {
+    category: string
+  }
+
+  const [categoryColumns, setCategoryColumns] = useState<IDataGridColumn[]>([])
+  const [categoryRows, setCategoryRows] = useState<ICategoryRow[]>([])
+  const [columns, setColumns] = useState<IDataGridColumn[]>([])
+  const [rows, setRows] = useState<IBudgetRow[]>([])
 
   useEffect(() => {
     async function getBudget () {
@@ -35,8 +44,7 @@ function Budget () {
 
           return {
             budgeted,
-            outflows: sumOfTransactionsPennies,
-            balance: budgeted === undefined ? 0 - sumOfTransactionsPennies : budgeted - sumOfTransactionsPennies
+            outflows: sumOfTransactionsPennies
           }
         })
 
@@ -49,8 +57,8 @@ function Budget () {
     getBudget()
   }, [])
 
-  function renderBudgetRow (rowIndex: React.Key, row: IDataGridRow, onRowsChange: (rows: any[]) => void) {
-    function onRowValueChange (columnKey: string, newValue: number) {
+  function renderBudgetRow (rowIndex: React.Key, row: IBudgetRow, onRowsChange: (rows: IBudgetRow[]) => void) {
+    function onRowValueChange (columnKey: keyof IBudgetRow, newValue: number) {
       const allRowsWithUpdates = rows.map((row, indexTemp) => {
         if (rowIndex !== indexTemp) {
           return row // not updating this one, leave it
@@ -64,19 +72,24 @@ function Budget () {
 
       onRowsChange(allRowsWithUpdates)
     }
+    const balance = row.budgeted === undefined ? 0 - row.outflows : row.budgeted - row.outflows
 
     return (
-      Object.keys(row).map((columnKey) => {
-        const rowValueForColumn = row[columnKey]
-        return (
-          <RowCell key={columnKey}>
-            <InputCurrency value={rowValueForColumn} onChange={(newValue) => onRowValueChange(columnKey, newValue)}/>
-          </RowCell>)
-      })
+      <>
+        <RowCell>
+          <InputCurrency value={row.budgeted} onChange={(newValue) => onRowValueChange('budgeted', newValue)}/>
+        </RowCell>
+        <RowCell>
+          <InputCurrency readonly value={row.outflows} />
+        </RowCell>
+        <RowCell>
+          <InputCurrency readonly value={balance} />
+        </RowCell>
+      </>
     )
   }
 
-  function renderCategoryRow (rowIndex: React.Key, row: IDataGridRow, onRowsChange: (rows: any[]) => void) {
+  function renderCategoryRow (rowIndex: React.Key, row: ICategoryRow, onRowsChange: (rows: ICategoryRow[]) => void) {
     function onRowValueChange (columnKey: string, newValue: string) {
       const allRowsWithUpdates = categoryRows.map((row, indexTemp) => {
         if (rowIndex !== indexTemp) {

@@ -3,16 +3,19 @@ import React, { useEffect, useRef, useState } from 'react'
 
 export interface IProps {
   value?: number // pennies
-  onChange: (newValue: number) => void
+  onChange?: (newValue: number) => void
+  readonly?: boolean
 }
 
-export default function InputCurrency ({ value, onChange }: IProps) {
+export default function InputCurrency ({ value, onChange, readonly }: IProps) {
   const inputRef = useRef<HTMLInputElement>(null)
   const { fromPenniesToCurrency, toPennies } = useCurrency()
   const [renderValue, setRenderValue] = useState('')
 
   function handleOnBlur (event: React.FocusEvent<HTMLInputElement>) {
-    onChange(toPennies(event.target.value))
+    if (onChange !== undefined) {
+      onChange(toPennies(event.target.value))
+    }
   }
 
   function handleOnChange (event: React.ChangeEvent<HTMLInputElement>) {
@@ -39,6 +42,7 @@ export default function InputCurrency ({ value, onChange }: IProps) {
         inputMode="decimal"
         value={renderValue}
         placeholder="0.00"
+        readOnly={readonly}
         className={'w-full border px-4 py-2 border-gray-500'}
         onFocus={handleOnFocus}
         onChange={handleOnChange}
