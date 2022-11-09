@@ -1,17 +1,15 @@
 import { useEffect, useState } from 'react'
 import { db, IAccount, ICategory, ITransaction, OAccountType } from '../../db'
-import Table from '@/components/Table'
-import TableData from '@/components/Table/TableData'
-import TableHeader from '@/components/Table/TableHeader'
-import { useCurrency } from '@/hooks/useCurrency'
 import InputCurrency from '@/components/Form/InputCurrency'
+import DataGrid, { IDataGridColumn } from '@/components/DataGrid'
+import RowCell from '@/components/DataGrid/RowCell'
+import InputText from '@/components/Form/InputText'
 
 export default function Accounts () {
   const [accounts, setAccounts] = useState<IAccount[]>([])
   const [categories, setCategories] = useState<ICategory[]>([])
   const [transactions, setTransactions] = useState<ITransaction[]>([])
   const [testMoneyInput, setTestMoneyInput] = useState<number>()
-  const { fromPenniesToCurrency } = useCurrency()
 
   async function importData () {
     const accounts: IAccount[] = [
@@ -61,34 +59,45 @@ export default function Accounts () {
   function accountItem (account: IAccount) {
     const transactionsForAccount = transactions.filter((transaction) => transaction.accountId === account.id)
 
-    const transactionRows = transactionsForAccount.map((transaction) => {
-      const categoryForTransaction = categories.find((category) => category.id === transaction.categoryId)
-      return (
-        <tr key={transaction.id}>
-          <TableData>{transaction.date}</TableData>
-          <TableData>dont have</TableData>
-          <TableData>{categoryForTransaction?.name}</TableData>
-          <TableData>{fromPenniesToCurrency(transaction.amountPennies)}</TableData>
-          <TableData>dont really have</TableData>
-        </tr>
-      )
-    })
-
-    const headers = [
-      (<TableHeader key={'date'}>Date</TableHeader>),
-      (<TableHeader key={'payee'}>Payee</TableHeader>),
-      (<TableHeader key={'category'}>Category</TableHeader>),
-      (<TableHeader key={'outflow'}>Outflow</TableHeader>),
-      (<TableHeader key={'inflow'}>Inflow</TableHeader>)
+    const columns: IDataGridColumn[] = [
+      { key: 'date', name: 'Date' },
+      { key: 'payee', name: 'Payee' },
+      { key: 'category', name: 'Category' },
+      { key: 'outflow', name: 'Outflow' },
+      { key: 'inflow', name: 'Inflow' }
     ]
+
+    function setRows (rows: ITransaction[]) {
+      console.log('not implemented yet', rows)
+    }
+
+    function renderTransactionRow (rowIndex: React.Key, row: ITransaction, onRowsChange: (rows: ITransaction[]) => void) {
+      const categoryForTransaction = categories.find((category) => category.id === row.categoryId)
+      return (
+        <>
+          <RowCell>
+            <InputText value={row.date} />
+          </RowCell>
+          <RowCell>
+            <InputText value='dont have' />
+          </RowCell>
+          <RowCell>
+            <InputText value={categoryForTransaction?.name} />
+          </RowCell>
+          <RowCell>
+            <InputCurrency readonly value={row.amountPennies} />
+          </RowCell>
+          <RowCell>
+            <InputText value='dont have' />
+          </RowCell>
+        </>
+      )
+    }
 
     return (
       <div key={account.id}>
           <p><b>Transactions for account:</b> {account.name} ({transactionsForAccount.length})</p>
-          <Table
-            headers={headers}
-            rows={transactionRows}
-          />
+          <DataGrid rows={transactionsForAccount} columns={columns} onRowsChange={setRows} rowRenderer={renderTransactionRow}></DataGrid>
       </div>
     )
   }

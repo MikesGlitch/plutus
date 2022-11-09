@@ -2,12 +2,14 @@ import React from 'react'
 
 export interface IProps {
   value?: string
-  onChange: (newValue: string) => void
+  onChange?: (newValue: string) => void
 }
 
 export default function InputText ({ value, onChange }: IProps) {
   function handleOnChange (event: React.ChangeEvent<HTMLInputElement>) {
-    onChange(event.target.value)
+    if (onChange !== undefined) {
+      onChange(event.target.value)
+    }
   }
 
   return (

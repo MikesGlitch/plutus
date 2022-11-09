@@ -13,19 +13,23 @@ export interface IProps<TColumn, TRow> {
 }
 
 export default function DataGrid<TRow> ({ columns, rows, onRowsChange, rowRenderer }: IProps<IDataGridColumn, TRow>) {
+  const hasRows = rows.length > 0
   return (
-    <div className='grid text-right' style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr)` }}>
+    <div className='grid text-right border' style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr)` }}>
       <div className='contents'>
         { columns.map((column) => {
           return (<HeaderCell key={column.key} name={column.name}></HeaderCell>)
         }) }
       </div>
       <div className='contents'>
-        { rows.map((row, rowIndex) => {
+        { hasRows && rows.map((row, rowIndex) => {
           return (<div className='contents' key={rowIndex}>
             {rowRenderer(rowIndex, row, onRowsChange)}
           </div>)
         }) }
+        { !hasRows && <>
+          <div className='text-center italic' style={{ gridColumn: `span ${columns.length}` }}>No rows found</div>
+        </>}
       </div>
     </div>
   )
