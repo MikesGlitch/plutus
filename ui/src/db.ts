@@ -31,9 +31,15 @@ export interface ICategory {
   name: string
 }
 
+export interface IPayee {
+  id?: number // apparently needs to be nullable for inserts???  ANNOYING!
+  name: string
+}
+
 export interface ITransaction {
   id?: number // apparently needs to be nullable for inserts???  ANNOYING!
   accountId: IAccount['id']
+  payeeId: IPayee['id']
   categoryId: ICategory['id']
   amountPennies: number // stored in pennied as numeric to respect precision. Formatting applied on display
   description: string
@@ -47,6 +53,7 @@ export class MySubClassedDexie extends Dexie {
   // We just tell the typing system this is the case
   users!: Table<IUser>
   categories!: Table<ICategory>
+  payees!: Table<IPayee>
   accounts!: Table<IAccount>
   transactions!: Table<ITransaction>
 
@@ -56,6 +63,7 @@ export class MySubClassedDexie extends Dexie {
       users: '++id, username', // Primary key and indexed props
       accounts: '++id, type', // Primary key and indexed props
       categories: '++id, name', // Primary key and indexed props
+      payees: '++id, name', // Primary key and indexed props
       transactions: '++id, accountId, categoryId' // Primary key and indexed props
     })
   }

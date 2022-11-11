@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { db, IAccount, ICategory, ITransaction, OAccountType } from '../../db'
+import { db, IAccount, ICategory, IPayee, ITransaction, OAccountType } from '../../db'
 import InputCurrency from '@/components/Form/InputCurrency'
 import DataGrid, { IDataGridColumn } from '@/components/DataGrid'
 import RowCell from '@/components/DataGrid/RowCell'
@@ -8,8 +8,8 @@ import InputText from '@/components/Form/InputText'
 export default function Accounts () {
   const [accounts, setAccounts] = useState<IAccount[]>([])
   const [categories, setCategories] = useState<ICategory[]>([])
+  const [payees, setPayees] = useState<IPayee[]>([])
   const [transactions, setTransactions] = useState<ITransaction[]>([])
-  const [testMoneyInput, setTestMoneyInput] = useState<number>()
 
   async function importData () {
     const accounts: IAccount[] = [
@@ -32,8 +32,16 @@ export default function Accounts () {
     await db.categories.bulkAdd(categories)
     setCategories(categories)
 
+    const payees: IPayee[] = [
+      { id: 1, name: 'Shell Energy' },
+      { id: 2, name: 'Tesco' }
+    ]
+
+    await db.payees.bulkAdd(payees)
+    setPayees(payees)
+
     const transactions: ITransaction[] = [
-      { accountId: 1, amountPennies: 1023, categoryId: 1, cleared: true, date: '2022-10-09', description: 'imported', notes: '' }
+      { accountId: 1, amountPennies: 1023, payeeId: 1, categoryId: 1, cleared: true, date: '2022-10-09', description: 'imported', notes: '' }
     ]
     await db.transactions.bulkAdd(transactions)
     setTransactions(transactions)
@@ -46,6 +54,8 @@ export default function Accounts () {
         setAccounts(dbAccounts)
         const dbCategories = await db.categories.toArray()
         setCategories(dbCategories)
+        const dbPayees = await db.payees.toArray()
+        setPayees(dbPayees)
         const dbTransactions = await db.transactions.toArray()
         setTransactions(dbTransactions)
       } catch (error) {
@@ -73,22 +83,32 @@ export default function Accounts () {
 
     function renderTransactionRow (rowIndex: React.Key, row: ITransaction, onRowsChange: (rows: ITransaction[]) => void) {
       const categoryForTransaction = categories.find((category) => category.id === row.categoryId)
+      let outflow: number | undefined
+      let inflow: number | undefined
+      if (row.amountPennies < 0) {
+        outflow = row.amountPennies
+      } else {
+        inflow = row.amountPennies
+      }
+
+      const payeeName = payees.find((payee) => payee.id === row.payeeId)?.name
+
       return (
         <>
           <RowCell>
             <InputText value={row.date} />
           </RowCell>
           <RowCell>
-            <InputText value='dont have' />
+            <InputText value={payeeName} />
           </RowCell>
           <RowCell>
             <InputText value={categoryForTransaction?.name} />
           </RowCell>
           <RowCell>
-            <InputCurrency readonly value={row.amountPennies} />
+            <InputCurrency value={outflow} />
           </RowCell>
           <RowCell>
-            <InputText value='dont have' />
+            <InputCurrency value={inflow} />
           </RowCell>
         </>
       )
@@ -106,11 +126,8 @@ export default function Accounts () {
       <>
         <h1 className="text-xl font-bold">Accounts</h1>
         <div><button className="" onClick={importData}>Import</button></div>
-        <div className="flex flex-col gap-4 items-center justify-center w-full">
-          <InputCurrency value={testMoneyInput} onChange={(newValue) => setTestMoneyInput(newValue)} />
-        </div>
         <div className="flex flex-col gap-6">
-          {accounts.map((account) => accountItem(account))}
+          {accounts.map((account) => <div key={account.id}>{accountItem(account)}</div>)}
         </div>
       </>
   )
