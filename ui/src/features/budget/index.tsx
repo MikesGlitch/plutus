@@ -2,6 +2,8 @@ import DataGrid, { IDataGridColumn } from '@/components/DataGrid'
 import RowCell from '@/components/DataGrid/RowCell'
 import InputCurrency from '@/components/Form/InputCurrency'
 import InputText from '@/components/Form/InputText'
+import Heading from '@/components/Typography/Heading'
+import Paragraph from '@/components/Typography/Paragraph'
 import React, { useEffect, useState } from 'react'
 import { db } from '../../db'
 
@@ -114,7 +116,8 @@ function Budget () {
 
   return (
       <>
-        <h1>Budget - similar to <a href="https://github.com/adazzle/react-data-grid">https://github.com/adazzle/react-data-grid</a></h1>
+        <Heading>Budget</Heading>
+        <Paragraph>similar to <a href="https://github.com/adazzle/react-data-grid">https://github.com/adazzle/react-data-grid</a></Paragraph>
         <pre>Categories: { JSON.stringify(categoryRows) }</pre>
         <div className='flex gap-4'>
           <div className='w-64'>

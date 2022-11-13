@@ -4,6 +4,8 @@ import InputCurrency from '@/components/Form/InputCurrency'
 import DataGrid, { IDataGridColumn } from '@/components/DataGrid'
 import RowCell from '@/components/DataGrid/RowCell'
 import InputText from '@/components/Form/InputText'
+import Heading from '@/components/Typography/Heading'
+import Paragraph from '@/components/Typography/Paragraph'
 
 export default function Accounts () {
   const [accounts, setAccounts] = useState<IAccount[]>([])
@@ -116,7 +118,7 @@ export default function Accounts () {
 
     return (
       <div key={account.id}>
-          <p><b>Transactions for account:</b> {account.name} ({transactionsForAccount.length})</p>
+          <Paragraph><b>Transactions for account:</b> {account.name} ({transactionsForAccount.length})</Paragraph>
           <DataGrid rows={transactionsForAccount} columns={columns} onRowsChange={setRows} rowRenderer={renderTransactionRow}></DataGrid>
       </div>
     )
@@ -124,7 +126,7 @@ export default function Accounts () {
 
   return (
       <>
-        <h1 className="text-xl font-bold">Accounts</h1>
+        <Heading>Accounts</Heading>
         <div><button className="" onClick={importData}>Import</button></div>
         <div className="flex flex-col gap-6">
           {accounts.map((account) => <div key={account.id}>{accountItem(account)}</div>)}

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { useEffect, useState } from 'react'
+import Heading from './components/Typography/Heading'
 
 function ListFiles () {
   async function listFiles () {
@@ -39,7 +40,7 @@ function ListFiles () {
 
   return (
     <div>
-      <h1>List files</h1>
+      <Heading>List files</Heading>
       { files }
     </div>
   )

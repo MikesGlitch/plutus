@@ -1,3 +1,5 @@
+import Heading from '@/components/Typography/Heading'
+import Paragraph from '@/components/Typography/Paragraph'
 import { useState } from 'react'
 import { db, IUser } from '../../db'
 
@@ -32,10 +34,10 @@ function UserRegistrationForm () {
 
   return (
       <>
-        <h1>User Registration</h1>
-        <p>
+        <Heading>User Registration</Heading>
+        <Paragraph>
           {status}
-        </p>
+        </Paragraph>
         username:
         <input
           type="text"

@@ -1,3 +1,4 @@
+import Heading from '@/components/Typography/Heading'
 import { useEffect, useState } from 'react'
 import { db, IUser } from '../../db'
 
@@ -20,7 +21,7 @@ function UserList () {
 
   return (
       <>
-        <h1>Users</h1>
+        <Heading>Users</Heading>
         <div>
           Name search:
           <input

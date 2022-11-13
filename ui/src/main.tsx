@@ -7,6 +7,7 @@ import Accounts from './features/accounts'
 import Budget from './features/budget'
 import UpcomingFeatures from './features/upcoming-features'
 import TheFallback from './TheFallback'
+import Heading from './components/Typography/Heading'
 
 const router = createBrowserRouter([
   {
@@ -24,7 +25,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'reports',
-        element: <h1>Reports</h1>
+        element: <Heading>Reports</Heading>
       },
       {
         path: 'accounts',
@@ -40,9 +41,6 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    {/* <BrowserRouter>
-      <App />
-    </BrowserRouter> */}
     <RouterProvider router={router} />
   </React.StrictMode>
 )
