@@ -5,7 +5,17 @@ export const useCurrency = () => {
 
   // takes the money in pennies (in my case) and multiplies it by a cent (100) putting it into pounds then formatting it
   const fromPenniesToCurrency = (valueInPennies: number) => {
-    return Currency(valueInPennies, { ...commonOptions, fromCents: true }).format()
+    return Currency(valueInPennies, {
+      ...commonOptions,
+      fromCents: true
+    }).format()
+  }
+
+  const fromPenniesToCurrencyWithoutSymbol = (valueInPennies: number) => {
+    return Currency(valueInPennies, {
+      ...commonOptions,
+      fromCents: true
+    }).value.toString()
   }
 
   // Conert value in pounds and pennies (23.32) to just pennies (2332) for storage in integer
@@ -32,6 +42,7 @@ export const useCurrency = () => {
 
   return {
     fromPenniesToCurrency,
+    fromPenniesToCurrencyWithoutSymbol,
     toPennies,
     isValidCurrency,
     cleanValue
