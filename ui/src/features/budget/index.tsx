@@ -60,7 +60,7 @@ function Budget () {
   }, [])
 
   function renderBudgetRow (rowIndex: React.Key, row: IBudgetRow, onRowsChange: (rows: IBudgetRow[]) => void) {
-    function onRowValueChange (columnKey: keyof IBudgetRow, newValue: number) {
+    function onRowValueChange (columnKey: keyof IBudgetRow, newValue?: number) {
       const allRowsWithUpdates = rows.map((row, indexTemp) => {
         if (rowIndex !== indexTemp) {
           return row // not updating this one, leave it
@@ -108,9 +108,9 @@ function Budget () {
     }
 
     return (
-      <div key={rowIndex} className="outline outline-1 outline-gray-300">
+      <RowCell>
         <InputText value={row.category} onChange={(newValue) => onRowValueChange('category', newValue)} />
-      </div>
+      </RowCell>
     )
   }
 

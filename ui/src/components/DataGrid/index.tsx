@@ -3,6 +3,7 @@ import HeaderCell from './HeaderCell'
 export interface IDataGridColumn {
   key: string
   name: string
+  align?: 'left' | 'center' | 'right'
 }
 
 export interface IProps<TColumn, TRow> {
@@ -18,7 +19,7 @@ export default function DataGrid<TRow> ({ columns, rows, onRowsChange, rowRender
     <div className='grid text-right border' style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr)` }}>
       <div className='contents'>
         { columns.map((column) => {
-          return (<HeaderCell key={column.key} name={column.name}></HeaderCell>)
+          return (<HeaderCell key={column.key} align={column.align} name={column.name}></HeaderCell>)
         }) }
       </div>
       <div className='contents'>
