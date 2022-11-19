@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { db, IAccount, ICategory, IPayee, ITransaction, OAccountType } from '../../db'
 import InputCurrency from '@/components/Form/InputCurrency'
-import DataGrid, { IDataGridColumn } from '@/components/DataGrid'
+import DataGrid, { IDataGridColumn, IRowRenderer } from '@/components/DataGrid'
 import RowCell from '@/components/DataGrid/RowCell'
 import InputText from '@/components/Form/InputText'
 import Heading from '@/components/Typography/Heading'
@@ -83,22 +83,22 @@ export default function Accounts () {
       console.log('not implemented yet', rows)
     }
 
-    function renderTransactionRow (rowIndex: React.Key, row: ITransaction, onRowsChange: (rows: ITransaction[]) => void) {
-      const categoryForTransaction = categories.find((category) => category.id === row.categoryId)
+    function renderTransactionRow (props: IRowRenderer<ITransaction>) {
+      const categoryForTransaction = categories.find((category) => category.id === props.row.categoryId)
       let outflow: number | undefined
       let inflow: number | undefined
-      if (row.amountPennies < 0) {
-        outflow = row.amountPennies
+      if (props.row.amountPennies < 0) {
+        outflow = props.row.amountPennies
       } else {
-        inflow = row.amountPennies
+        inflow = props.row.amountPennies
       }
 
-      const payeeName = payees.find((payee) => payee.id === row.payeeId)?.name
+      const payeeName = payees.find((payee) => payee.id === props.row.payeeId)?.name
 
       return (
         <>
           <RowCell>
-            <InputText value={row.date} />
+            <InputText value={props.row.date} />
           </RowCell>
           <RowCell>
             <InputText value={payeeName} />
@@ -118,8 +118,8 @@ export default function Accounts () {
 
     return (
       <div key={account.id}>
-          <Paragraph><b>Transactions for account:</b> {account.name} ({transactionsForAccount.length})</Paragraph>
-          <DataGrid rows={transactionsForAccount} columns={columns} onRowsChange={setRows} rowRenderer={renderTransactionRow}></DataGrid>
+        <Paragraph><b>Transactions for account:</b> {account.name} ({transactionsForAccount.length})</Paragraph>
+        <DataGrid rows={transactionsForAccount} columns={columns} onRowsChange={setRows} rowRenderer={renderTransactionRow}></DataGrid>
       </div>
     )
   }

@@ -1,18 +1,13 @@
-import DataGrid, { IDataGridColumn } from '@/components/DataGrid'
+import DataGrid, { IDataGridColumn, IRowRenderer } from '@/components/DataGrid'
 import RowCell from '@/components/DataGrid/RowCell'
-import InputCurrency from '@/components/Form/InputCurrency'
 import InputText from '@/components/Form/InputText'
 import Heading from '@/components/Typography/Heading'
 import Paragraph from '@/components/Typography/Paragraph'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { db } from '../../db'
+import BudgetRow, { IBudgetRow } from './BudgetRow'
 
 function Budget () {
-  interface IBudgetRow {
-    budgeted?: number
-    outflows: number
-  }
-
   interface ICategoryRow {
     category: string
   }
@@ -59,57 +54,18 @@ function Budget () {
     getBudget()
   }, [])
 
-  function renderBudgetRow (rowIndex: React.Key, row: IBudgetRow, onRowsChange: (rows: IBudgetRow[]) => void) {
-    function onRowValueChange (columnKey: keyof IBudgetRow, newValue?: number) {
-      const allRowsWithUpdates = rows.map((row, indexTemp) => {
-        if (rowIndex !== indexTemp) {
-          return row // not updating this one, leave it
-        }
-
-        return {
-          ...row,
-          [columnKey]: newValue
-        }
-      })
-
-      onRowsChange(allRowsWithUpdates)
-    }
-    const balance = row.budgeted === undefined ? 0 - row.outflows : row.budgeted - row.outflows
-
-    return (
-      <>
-        <RowCell>
-          <InputCurrency value={row.budgeted} onChange={(newValue) => onRowValueChange('budgeted', newValue)}/>
-        </RowCell>
-        <RowCell>
-          <InputCurrency readonly value={row.outflows} />
-        </RowCell>
-        <RowCell>
-          <InputCurrency readonly value={balance} />
-        </RowCell>
-      </>
-    )
+  function renderBudgetRow (row: IRowRenderer<IBudgetRow>) {
+    return (<BudgetRow key={row.key} onRowChange={row.onRowChange} row={row.row} />)
   }
 
-  function renderCategoryRow (rowIndex: React.Key, row: ICategoryRow, onRowsChange: (rows: ICategoryRow[]) => void) {
+  function renderCategoryRow (props: IRowRenderer<ICategoryRow>) {
     function onRowValueChange (columnKey: string, newValue: string) {
-      const allRowsWithUpdates = categoryRows.map((row, indexTemp) => {
-        if (rowIndex !== indexTemp) {
-          return row // not updating this one, leave it
-        }
-
-        return {
-          ...row,
-          [columnKey]: newValue
-        }
-      })
-
-      onRowsChange(allRowsWithUpdates)
+      props.onRowChange({ ...props.row, [columnKey]: newValue })
     }
 
     return (
       <RowCell>
-        <InputText value={row.category} onChange={(newValue) => onRowValueChange('category', newValue)} />
+        <InputText value={props.row.category} onChange={(newValue) => onRowValueChange('category', newValue)} />
       </RowCell>
     )
   }
