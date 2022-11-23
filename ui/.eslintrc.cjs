@@ -22,6 +22,7 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-floating-promises': 'off',
     '@typescript-eslint/no-empty-interface': 'off',
-    '@typescript-eslint/no-misused-promises': ['error', { checksVoidReturn: false }]
+    '@typescript-eslint/no-misused-promises': ['error', { checksVoidReturn: false }],
+    "@typescript-eslint/no-non-null-assertion": 'off'
   }
 }

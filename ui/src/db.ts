@@ -21,23 +21,23 @@ export const OAccountType = {
 export type AccountType = typeof OAccountType[keyof typeof OAccountType]
 
 export interface IAccount {
-  id?: number // apparently needs to be nullable for inserts???  ANNOYING!
+  id?: number
   name: string
   type: AccountType
 }
 
 export interface ICategory {
-  id?: number // apparently needs to be nullable for inserts???  ANNOYING!
+  id?: number
   name: string
 }
 
 export interface IPayee {
-  id?: number // apparently needs to be nullable for inserts???  ANNOYING!
+  id?: number
   name: string
 }
 
 export interface ITransaction {
-  id?: number // apparently needs to be nullable for inserts???  ANNOYING!
+  id?: number
   accountId: IAccount['id']
   payeeId: IPayee['id']
   categoryId: ICategory['id']

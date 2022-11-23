@@ -1,16 +1,32 @@
-import { db, IAccount } from '@/db'
+import { db } from '@/db'
+import { useCurrency } from '@/hooks/useCurrency'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
+interface IAccountInfo {
+  id: number
+  name: string
+  amountPennies: number
+}
+
 export default function TheNav () {
-  const [accounts, setAccounts] = useState<IAccount[]>([])
+  const { fromPenniesToCurrency } = useCurrency()
+  const [accounts, setAccounts] = useState<IAccountInfo[]>([])
   const [expandedAccounts, setExpandedAccounts] = useState<boolean>(true)
 
   useEffect(() => {
     async function getAccounts () {
       try {
-        const dbAccounts = await db.accounts.toArray()
-        setAccounts(dbAccounts)
+        const accounts = await db.accounts.toArray()
+
+        const accountTransactionsPromises = accounts.map(async (account) => {
+          const accountTransactions = await db.transactions.filter((transaction) => transaction.accountId === account.id).toArray()
+          const totalAmount = accountTransactions.map((transaction) => transaction.amountPennies).reduce((prev, current) => prev + current, 0)
+          return { id: account.id!, name: account.name, amountPennies: totalAmount }
+        })
+
+        const accountInfo = await Promise.all(accountTransactionsPromises)
+        setAccounts(accountInfo)
       } catch (error) {
         console.error('something bad happened', error)
       }
@@ -20,7 +36,7 @@ export default function TheNav () {
   }, [])
 
   return (
-    <aside className="fixed top-0 bottom-0 h-full w-60" aria-label="Sidebar">
+    <aside className="fixed top-0 bottom-0 h-full w-72" aria-label="Sidebar">
       <div className="overflow-y-auto h-full py-4 px-3 bg-gray-50 dark:bg-gray-800">
         <Link to={'/'} className="flex items-center pl-2.5 mb-5">
           {/* <img src="https://flowbite.com/docs/images/logo.svg" className="mr-3 h-6 sm:h-7" alt="Flowbite Logo" /> */}
@@ -124,6 +140,9 @@ export default function TheNav () {
                   >
                     <span className="flex-1 whitespace-nowrap">
                       {account.name}
+                    </span>
+                    <span className="inline-flex justify-center items-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300">
+                      {fromPenniesToCurrency(account.amountPennies)}
                     </span>
                   </Link>)
               })}
