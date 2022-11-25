@@ -7,7 +7,11 @@ import Accounts from './features/accounts'
 import Budget from './features/budget'
 import UpcomingFeatures from './features/upcoming-features'
 import TheFallback from './TheFallback'
-import Heading from './components/Typography/Heading'
+import Reports from './features/reports'
+import { CategoryScale, Chart as ChartJS, LinearScale, LineController, LineElement, PointElement } from 'chart.js'
+
+// Needs to be registered at application level so it doesn't get re-registered when component mount/unmount
+ChartJS.register(LineController, CategoryScale, LinearScale, PointElement, LineElement)
 
 const router = createBrowserRouter([
   {
@@ -25,7 +29,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'reports',
-        element: <Heading>Reports</Heading>
+        element: <Reports />
       },
       {
         path: 'accounts',

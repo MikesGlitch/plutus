@@ -7,7 +7,7 @@ function TheFallback () {
     <div className="h-full">
       <div className='flex w-full h-full'>
         <TheNav />
-        <main className='w-full ml-60 py-4 px-3'>
+        <main className='w-full ml-72 py-4 px-3'>
           Fallback
         </main>
       </div>
