@@ -24,6 +24,7 @@ export interface IAccount {
   id?: number
   name: string
   type: AccountType
+  offBudget: boolean
 }
 
 export interface ICategory {

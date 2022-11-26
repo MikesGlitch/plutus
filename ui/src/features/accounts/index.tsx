@@ -15,11 +15,11 @@ export default function Accounts () {
 
   async function importData () {
     const accounts: IAccount[] = [
-      { name: 'Santander Savings', type: OAccountType.Savings },
-      { name: 'IWeb ISA', type: OAccountType.ISA },
-      { name: 'Halifax Spending', type: OAccountType.Spending },
-      { name: 'Fidelity Pension', type: OAccountType.Pension },
-      { name: 'IWeb GIA', type: OAccountType.GeneralInvestment }
+      { name: 'Santander Savings', type: OAccountType.Savings, offBudget: false },
+      { name: 'IWeb ISA', type: OAccountType.ISA, offBudget: true },
+      { name: 'Halifax Spending', type: OAccountType.Spending, offBudget: false },
+      { name: 'Fidelity Pension', type: OAccountType.Pension, offBudget: true },
+      { name: 'IWeb GIA', type: OAccountType.GeneralInvestment, offBudget: true }
     ]
 
     await db.accounts.bulkAdd(accounts)
