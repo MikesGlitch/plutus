@@ -49,7 +49,6 @@ export default function TheNav () {
     <aside className="fixed top-0 bottom-0 h-full w-72" aria-label="Sidebar">
       <div className="overflow-y-auto h-full py-4 px-3 bg-gray-50 dark:bg-gray-800">
         <Link to={'/'} className="flex items-center pl-2.5 mb-5">
-          {/* <img src="https://flowbite.com/docs/images/logo.svg" className="mr-3 h-6 sm:h-7" alt="Flowbite Logo" /> */}
           <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
             Plutus
           </span>
