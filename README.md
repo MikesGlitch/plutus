@@ -3,6 +3,8 @@
 ## TODO
 - Continue work with indexedDB and how that would work. I could write a simple database backed by the FileSystem API, and periodically lock the database and back up that file. This would be pretty cool because I don't know of anyone who has implemented a simple FileSystem API backed database, but I could see it being useful for other purposes.
 
+- Change name to something UK based - maybe there's a UK name that means money? 
+
 10/10/2022
 ----------
 Plan: Go with IndexedDB, and try to sync it with Google Drive.  Put a basic UI in place for monthly budgets - like a spreadsheet
