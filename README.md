@@ -8,6 +8,11 @@
 - monte carlo js - https://www.orthogonal.info/2022/12/03/monte-carlo-simulation-in-javascript/
 - monte carlo .net - https://www.codeproject.com/articles/32654/monte-carlo-simulation
 
+- Example - https://projectionlab.com
+
+Do a really basic version of the monte carlo without any need for login etc. It should just let you enter your values and be done with it. Nice charts tho
+
+
 10/10/2022
 ----------
 Plan: Go with IndexedDB, and try to sync it with Google Drive.  Put a basic UI in place for monthly budgets - like a spreadsheet
