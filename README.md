@@ -6,6 +6,7 @@
 - Change name to something UK based - maybe there's a UK name that means money? 
 
 - monte carlo js - https://www.orthogonal.info/2022/12/03/monte-carlo-simulation-in-javascript/
+- monte carlo .net - https://www.codeproject.com/articles/32654/monte-carlo-simulation
 
 10/10/2022
 ----------
