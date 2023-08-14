@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31313.79
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plutus.Api", "Plutus.Api.csproj", "{B47FDED8-F12F-45FE-8404-CE2606BA8A9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plutus.Api", "Plutus.Api.csproj", "{B47FDED8-F12F-45FE-8404-CE2606BA8A9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plutus.Models", "..\Plutus.Models\Plutus.Models.csproj", "{191FB665-82B7-4070-9537-F13BE97B7B74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plutus.Models", "..\Plutus.Models\Plutus.Models.csproj", "{191FB665-82B7-4070-9537-F13BE97B7B74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plutus.Application", "..\Plutus.Application\Plutus.Application.csproj", "{EF239F38-E7ED-4CD6-8AAC-EDED5154E581}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plutus.Application", "..\Plutus.Application\Plutus.Application.csproj", "{EF239F38-E7ED-4CD6-8AAC-EDED5154E581}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

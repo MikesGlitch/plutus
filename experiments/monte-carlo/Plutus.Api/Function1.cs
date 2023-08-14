@@ -1,27 +1,31 @@
-using System;
-using System.IO;
+using System.Net;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+
 using Plutus.Application;
 
 namespace Plutus.Api
 {
-    public static class Function1
+    public class Function1
     {
-        [FunctionName("Function1")]
-        public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
-            ILogger log)
+        private readonly ILogger _logger;
+
+        public Function1(ILoggerFactory loggerFactory)
+        {
+            _logger = loggerFactory.CreateLogger<Function1>();
+        }
+
+        [Function("Function1")]
+        public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Function, "get")] HttpRequestData req)
         {
             var retirementService = new RetirementPlanService();
             var retirementPlan = retirementService.GetRetirementPlan();
-            
-            return new OkObjectResult(retirementPlan);
+
+            var response = req.CreateResponse(HttpStatusCode.OK);
+            await response.WriteAsJsonAsync(retirementPlan);
+            return response;
         }
     }
 }
