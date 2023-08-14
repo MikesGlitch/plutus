@@ -1,7 +1,25 @@
 # plutus
 
+
+
+
+
+# NOTE: Get IndexedDB out. Hate it. Would rather pay for DB hosting
+For Monte Carlo sim we don't actually need a DB so maybe start with that. Once we start looking at net worth or saving data we can just export/import the data to/from Google Drive/whatever?
+
+
 ## TODO
 - Continue work with indexedDB and how that would work. I could write a simple database backed by the FileSystem API, and periodically lock the database and back up that file. This would be pretty cool because I don't know of anyone who has implemented a simple FileSystem API backed database, but I could see it being useful for other purposes.
+
+- Change name to something UK based - maybe there's a UK name that means money? 
+
+- monte carlo js - https://www.orthogonal.info/2022/12/03/monte-carlo-simulation-in-javascript/
+- monte carlo .net - https://www.codeproject.com/articles/32654/monte-carlo-simulation
+
+- Example - https://projectionlab.com
+
+Do a really basic version of the monte carlo without any need for login etc. It should just let you enter your values and be done with it. Nice charts tho
+
 
 10/10/2022
 ----------
