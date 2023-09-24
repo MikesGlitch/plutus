@@ -2,21 +2,7 @@
 
 
 
-
-
-# NOTE: Get IndexedDB out. Hate it. Would rather pay for DB hosting
-For Monte Carlo sim we don't actually need a DB so maybe start with that. Once we start looking at net worth or saving data we can just export/import the data to/from Google Drive/whatever?
-
-
-
-
-# NOTE: Use MAUI with Blazor and create a desktop app with that? If you did that you could use sqllite, you could store that in google drive, and sync that to my devices as per ususal. Blazor would be ok because it would allow the users to host on the internet and access via web browser. The issue with that is if you have a server instance that is storing the sql file you'd have to save that file on the server (it wouldn't be local) - that's the same with Actual though.
-
-
-
-
 ## TODO
-- Continue work with indexedDB and how that would work. I could write a simple database backed by the FileSystem API, and periodically lock the database and back up that file. This would be pretty cool because I don't know of anyone who has implemented a simple FileSystem API backed database, but I could see it being useful for other purposes.
 
 - Change name to something UK based - maybe there's a UK name that means money? 
 
