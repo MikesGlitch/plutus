@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-// https://plutus-b6aovw6p1-mikesglitch.vercel.app/api/index
+// https://plutus-mikesglitch.vercel.app/index
 // Oh look, an example: https://github.com/riccardogiorato/template-go-vercel
 func HelloWorld(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello World from Go!")
