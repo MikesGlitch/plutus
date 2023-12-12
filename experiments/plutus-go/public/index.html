@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Test Golang Vercel</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png"/>
+    <script src="https://unpkg.com/htmx.org@1.9.9"></script>
+  </head>
+  <body>
+    <h1>This is from the public html folder</h1>
+    <p>I could put HTMX in here and call to load in the components?</p>
+    <p>Components would be served via templ</p>
+    <p>Not as ideal as loading it all at once - the only entry points are in /api?</p>
+    <button hx-post="/api/test" hx-swap="outerHTML">
+      Click Me
+    </button>
+  </body>
+</html>
