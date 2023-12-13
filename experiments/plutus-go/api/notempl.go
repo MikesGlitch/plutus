@@ -14,7 +14,7 @@ type NoTemplViewModel struct {
 func NoTemplHandler(w http.ResponseWriter, r *http.Request) {
 	var tmplt *template.Template
 	formattedTime := time.Now().Format(time.RFC850)
-	tmplt, _ = template.ParseFiles("notempl.html")
+	tmplt, _ = template.ParseFiles("notempltest.html")
 	vm := NoTemplViewModel{
 		Time: formattedTime,
 	}
