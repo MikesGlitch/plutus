@@ -9,16 +9,19 @@ templ Hello(time string) {
 templ Body(time string) {
 	<h1>Hello - from the server - Index page</h1>
 	<p>This is from a HTML page rendered via go-templ</p>
-	<div id="time-container">@Hello(time)</div>
+	<div id="time-container">
+		@Hello(time)
+	</div>
 	<button hx-post="/api/partials/test" hx-target="#time-container" hx-swap="innerHTML">
-	  Click Me
+		Click Me
 	</button>
-  <div hx-boost="true">
-	  <a href="/about">About</a>
-  </div>
+	<div hx-boost="true">
+		<a href="/about">About</a>
+	</div>
 }
 
 // https://templ.guide/server-side-rendering/creating-an-http-server-with-templ
+
 templ Page(time string) {
 	@layouts.Blank("Home", Body(time))
 }

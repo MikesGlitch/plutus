@@ -9,13 +9,16 @@ templ Hello(time string) {
 templ Body(time string) {
 	<h1>Hello - from the server - About page</h1>
 	<p>This is from a HTML page rendered via go-templ</p>
-	<p>@Hello(time)</p>
+	<p>
+		@Hello(time)
+	</p>
 	<div hx-boost="true">
 		<a href="/">get dafuq outta here</a>
 	</div>
 }
 
 // https://templ.guide/server-side-rendering/creating-an-http-server-with-templ
+
 templ Page(time string) {
 	@layouts.Blank("About", Body(time))
 }
