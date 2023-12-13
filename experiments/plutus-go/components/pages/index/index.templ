@@ -24,6 +24,9 @@ templ Page(time string) {
 			<button hx-post="/api/partials/test" hx-target="#time-container" hx-swap="innerHTML">
 				Click Me
 			</button>
+			<div hx-boost="true">
+				<a href="/about">About</a>
+			</div>
 		</body>
 	</html>
 }
