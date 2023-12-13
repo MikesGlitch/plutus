@@ -9,5 +9,5 @@ import (
 
 func TestHandler(w http.ResponseWriter, r *http.Request) {
 	formattedTime := time.Now().Format(time.RFC850)
-	components.Hello(formattedTime).Render(r.Context(), w)
+	index.Hello(formattedTime).Render(r.Context(), w)
 }
