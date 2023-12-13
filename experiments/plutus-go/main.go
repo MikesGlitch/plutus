@@ -7,6 +7,10 @@ import (
 	"time"
 )
 
+type NoTemplViewModel struct {
+	Time string
+}
+
 func main() {
 	// Test harness - Vercel only reads the api directory so this should ideally point to that after spinning up
 	// This is wrong, it seems to be taking in all requests at this - need some work to make it fit with the vercel config
@@ -17,7 +21,11 @@ func main() {
 
 		tmplt, _ = template.ParseFiles("./components/pages/notempl/notempl.html")
 
-		err := tmplt.Execute(w, formattedTime)
+		vm := NoTemplViewModel{
+			Time: formattedTime,
+		}
+
+		err := tmplt.Execute(w, vm)
 
 		if err != nil {
 			return
