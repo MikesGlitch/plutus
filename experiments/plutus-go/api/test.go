@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/mikesglitch/plutus/components"
+	"github.com/mikesglitch/plutus/components/pages/index"
 )
 
 func TestHandler(w http.ResponseWriter, r *http.Request) {
