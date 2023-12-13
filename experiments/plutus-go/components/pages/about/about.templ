@@ -4,26 +4,16 @@ templ Hello(time string) {
 	<div><h1>{ time }</h1></div>
 }
 
+templ Body(time string) {
+	<h1>Hello - from the server - About page</h1>
+	<p>This is from a HTML page rendered via go-templ</p>
+	<p>@Hello(time)</p>
+	<div hx-boost="true">
+		<a href="/">get dafuq outta here</a>
+	</div>
+}
 
 // https://templ.guide/server-side-rendering/creating-an-http-server-with-templ
 templ Page(time string) {
-	<html>
-		<head>
-			<meta charset="UTF-8"/>
-			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			<title>Test Golang Vercel</title>
-			<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png"/>
-			<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png"/>
-			<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png"/>
-    	<script src="https://unpkg.com/htmx.org@1.9.9"></script>
-		</head>
-		<body style="background-color: red">
-			<h1>Hello - from the server - About page</h1>
-			<p>This is from a HTML page rendered via go-templ</p>
-			<p>@Hello(time)</p>
-			<div hx-boost="true">
-				<a href="/">get dafuq outta here</a>
-			</div>
-		</body>
-	</html>
+	@layouts.Blank("About", Body(time))
 }

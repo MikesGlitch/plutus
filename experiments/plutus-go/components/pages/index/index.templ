@@ -1,32 +1,24 @@
 package index
 
+import "github.com/mikesglitch/plutus/components/common/layouts"
+
 templ Hello(time string) {
 	<div><h1>{ time }</h1></div>
 }
 
+templ Body(time string) {
+	<h1>Hello - from the server - Index page</h1>
+	<p>This is from a HTML page rendered via go-templ</p>
+	<div id="time-container">@Hello(time)</div>
+	<button hx-post="/api/partials/test" hx-target="#time-container" hx-swap="innerHTML">
+	  Click Me
+	</button>
+  <div hx-boost="true">
+	  <a href="/about">About</a>
+  </div>
+}
 
 // https://templ.guide/server-side-rendering/creating-an-http-server-with-templ
 templ Page(time string) {
-	<html>
-		<head>
-			<meta charset="UTF-8"/>
-			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			<title>Test Golang Vercel</title>
-			<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png"/>
-			<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png"/>
-			<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png"/>
-    	<script src="https://unpkg.com/htmx.org@1.9.9"></script>
-		</head>
-		<body>
-			<h1>Hello - from the server - Index page</h1>
-			<p>This is from a HTML page rendered via go-templ</p>
-			<div id="time-container">@Hello(time)</div>
-			<button hx-post="/api/partials/test" hx-target="#time-container" hx-swap="innerHTML">
-				Click Me
-			</button>
-			<div hx-boost="true">
-				<a href="/about">About</a>
-			</div>
-		</body>
-	</html>
+	@layouts.Blank("Home", Body(time))
 }
