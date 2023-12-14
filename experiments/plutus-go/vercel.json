@@ -2,5 +2,6 @@
   "rewrites": [
     { "source": "/", "destination": "/api/index" },
     { "source": "/:path*", "destination": "/api/:path*" }
-  ]
+  ],
+  "buildCommand": "npm run buildcss"
 }

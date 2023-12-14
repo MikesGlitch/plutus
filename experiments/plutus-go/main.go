@@ -19,6 +19,8 @@ func main() {
 	http.HandleFunc("/about", api.AboutHandler)
 	http.HandleFunc("/", api.IndexHandler)
 
+	http.Handle("/plutus.css", http.FileServer(http.Dir("public")))
+
 	fmt.Println("Listening on 127.0.0.1:4000")
 	http.ListenAndServe("127.0.0.1:4000", nil)
 }

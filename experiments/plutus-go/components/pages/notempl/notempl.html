@@ -5,7 +5,7 @@
     {{template "partial_servertime" .Time}}
 	</div>
 
-	<button hx-post="/api/partials/test" hx-target="#time-container" hx-swap="innerHTML">
+	<button class="bg-violet-500 hover:bg-violet-600 focus:outline-none focus:ring focus:ring-violet-300 active:bg-violet-700 px-5 py-2 text-sm leading-5 rounded-full font-semibold text-white" hx-post="/api/partials/test" hx-target="#time-container" hx-swap="innerHTML">
 		Click Me
 	</button>
 {{end}}
