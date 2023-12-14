@@ -14,7 +14,7 @@ type NoTemplViewModel struct {
 // Can I embed this outside of the API?
 // I'd like to do it in the main.go and have vercel understand it so I don't have to nest html my api folder to embed it
 
-//go:embed "notempl.html"
+//go:embed "notempltest.html"
 var noTemplPageHtml string
 
 // https://www.makeuseof.com/go-html-templating/
