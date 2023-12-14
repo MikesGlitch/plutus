@@ -1,0 +1,17 @@
+{{define "body"}}
+<h1>Hello - from the server - Index page</h1>
+<p>This is from a HTML page rendered</p>
+<div id="time-container">
+	<h1>{{ .Time }}</h1>
+</div>
+<button
+  hx-post="/api/partials/test"
+  hx-target="#time-container"
+  hx-swap="innerHTML"
+>
+  Click Me
+</button>
+<div hx-boost="true">
+  <a href="/about">About</a>
+</div>
+{{end}}

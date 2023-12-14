@@ -6,12 +6,7 @@ import (
 	"github.com/mikesglitch/plutus/api"
 	"github.com/mikesglitch/plutus/api/partials"
 	"net/http"
-	// "time"
 )
-
-type NoTemplViewModel struct {
-	Time string
-}
 
 // Should probably be embedding the html here rather than in the functions
 // Is there a startup file that can happen as a result of ALL function?
@@ -20,11 +15,7 @@ type NoTemplViewModel struct {
 
 func main() {
 	// Test harness - Vercel only reads the api directory so this should ideally point to that after spinning up
-	// This is wrong, it seems to be taking in all requests at this - need some work to make it fit with the vercel config
-	// FYI: we're using templ cause vercel/other deployments wont always recognise a .html file as a part of deploy - they need a .go file.
-	// Templ generates the html files as .go files which allows them to be picked up by Serverless deploys
 	http.HandleFunc("/api/partials/test", partials.TestPartialHandler)
-	http.HandleFunc("/notempl", api.NoTemplHandler)
 	http.HandleFunc("/about", api.AboutHandler)
 	http.HandleFunc("/", api.IndexHandler)
 
