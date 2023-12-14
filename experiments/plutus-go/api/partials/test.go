@@ -1,4 +1,4 @@
-package handler
+package partials
 
 import (
 	"net/http"
@@ -7,7 +7,7 @@ import (
 	"github.com/mikesglitch/plutus/components/pages/index"
 )
 
-func TestHandler(w http.ResponseWriter, r *http.Request) {
+func TestPartialHandler(w http.ResponseWriter, r *http.Request) {
 	formattedTime := time.Now().Format(time.RFC850)
 	index.Hello(formattedTime).Render(r.Context(), w)
 }
