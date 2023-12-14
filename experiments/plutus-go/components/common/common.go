@@ -6,3 +6,6 @@ import (
 
 //go:embed "servertime.html"
 var ServerTimeHtml string
+
+//go:embed "link.html"
+var LinkHtml string

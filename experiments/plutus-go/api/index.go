@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
 	"time"
@@ -8,6 +9,7 @@ import (
 	"github.com/mikesglitch/plutus/components/common"
 	"github.com/mikesglitch/plutus/components/layouts"
 	"github.com/mikesglitch/plutus/components/pages"
+	"github.com/mikesglitch/plutus/utils"
 )
 
 type NoTemplViewModel struct {
@@ -16,10 +18,12 @@ type NoTemplViewModel struct {
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	var page = template.New("IndexPage")
-	page.Parse(layouts.BlankLayoutHtml)
+	var page = template.New("IndexPage").Funcs(utils.Funcs)
+	// I can probably set this up once for everything? Then just call it with a name? I'd like to say just call "indexPageHtml"
 	page.Parse(pages.IndexPageHtml)
+	page.Parse(layouts.BlankLayoutHtml)
 	page.Parse(common.ServerTimeHtml)
+	page.Parse(common.LinkHtml)
 
 	formattedTime := time.Now().Format(time.RFC850)
 	vm := NoTemplViewModel{
@@ -27,9 +31,10 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		Time:  formattedTime,
 	}
 
-	err := page.Execute(w, vm)
+	err := page.ExecuteTemplate(w, "IndexPage", vm)
 
 	if err != nil {
+		fmt.Print(err)
 		return
 	}
 }

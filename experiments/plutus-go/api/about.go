@@ -8,13 +8,15 @@ import (
 	"github.com/mikesglitch/plutus/components/common"
 	"github.com/mikesglitch/plutus/components/layouts"
 	"github.com/mikesglitch/plutus/components/pages"
+	"github.com/mikesglitch/plutus/utils"
 )
 
 func AboutHandler(w http.ResponseWriter, r *http.Request) {
-	var page = template.New("AboutPage")
-	page.Parse(layouts.BlankLayoutHtml)
+	var page = template.New("AboutPage").Funcs(utils.Funcs)
 	page.Parse(pages.AboutPageHtml)
+	page.Parse(layouts.BlankLayoutHtml)
 	page.Parse(common.ServerTimeHtml)
+	page.Parse(common.LinkHtml)
 
 	formattedTime := time.Now().Format(time.RFC850)
 	vm := NoTemplViewModel{

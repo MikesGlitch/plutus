@@ -1,3 +1,4 @@
+{{define "blanklayout"}}
 <html>
   <head>
     <meta charset="UTF-8"/>
@@ -7,6 +8,7 @@
     <script src="https://unpkg.com/htmx.org@1.9.9"></script>
   </head>
   <body>
-    {{template "body" .}}
+    {{block "body" .}}{{end}}
   </body>
 </html>
+{{end}}

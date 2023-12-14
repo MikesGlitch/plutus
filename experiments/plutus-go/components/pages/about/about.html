@@ -1,8 +1,10 @@
+{{template "blanklayout" .}}
+
 {{ define "body"}}
 <h1>Hello - from the server - About page</h1>
 <p>This is from a HTML page</p>
 <p>{{template "partial_servertime" .}}</p>
 <div hx-boost="true">
-  <a href="/">get dafuq outta here</a>
+  {{template "link" (map "Href" "/" "Text" "get dafuq outta here")}}
 </div>
 {{ end }}

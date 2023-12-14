@@ -1,8 +1,10 @@
+{{template "blanklayout" .}}
+
 {{define "body"}}
 <h1 class="text-3xl font-bold underline">Hello - from the server - Index page</h1>
-<p>This is from a HTML page rendered</p>
+<p>Good example - https://github.com/biz/templates/blob/master/_examples/basic/templates/base.html</p>
 <div id="time-container">
-	<h1>{{ .Time }}</h1>
+  {{template "partial_servertime" .}}
 </div>
 <button
   class="bg-violet-500 hover:bg-violet-600 focus:outline-none focus:ring focus:ring-violet-300 active:bg-violet-700 px-5 py-2 text-sm leading-5 rounded-full font-semibold text-white"
@@ -13,6 +15,6 @@
   Click Me
 </button>
 <div hx-boost="true">
-  <a class="text-violet-600 hover:text-violet-900 border-b border-b-violet-600 hover:border-b-violet-900" href="/about">About</a>
+  {{template "link" (map "Href" "/about" "Text" "About")}}
 </div>
 {{end}}
