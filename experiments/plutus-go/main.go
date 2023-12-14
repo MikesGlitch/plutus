@@ -25,6 +25,7 @@ func main() {
 			Time: formattedTime,
 		}
 
+		println("are we here?", tmplt)
 		err := tmplt.Execute(w, vm)
 
 		if err != nil {
