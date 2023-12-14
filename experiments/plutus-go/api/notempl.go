@@ -20,10 +20,8 @@ func NoTemplHandler(w http.ResponseWriter, r *http.Request) {
 	// 	Time: formattedTime,
 	// }
 
-	println("are we here?")
-
 	err := tmplt.Execute(w, nil)
-
+	println("are we here?", err)
 	if err != nil {
 		return
 	}
