@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/mikesglitch/plutus/api"
 	"github.com/mikesglitch/plutus/api/partials"
-	"html/template"
 	"net/http"
 	// "time"
 )

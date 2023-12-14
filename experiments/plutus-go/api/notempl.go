@@ -1,10 +1,11 @@
 package api
 
 import (
-	_ "embed"
 	"html/template"
 	"net/http"
 	"time"
+
+	"github.com/mikesglitch/plutus/components/pages"
 )
 
 type NoTemplViewModel struct {
@@ -14,13 +15,10 @@ type NoTemplViewModel struct {
 // Can I embed this outside of the API?
 // I'd like to do it in the main.go and have vercel understand it so I don't have to nest html my api folder to embed it
 
-//go:embed "notempltest.html"
-var noTemplPageHtml string
-
 // https://www.makeuseof.com/go-html-templating/
 func NoTemplHandler(w http.ResponseWriter, r *http.Request) {
 	var noTemplTemplate = template.New("noTemplTemplate")
-	noTemplTemplate.Parse(noTemplPageHtml)
+	noTemplTemplate.Parse(pages.NoTemplPageHtml)
 
 	formattedTime := time.Now().Format(time.RFC850)
 	vm := NoTemplViewModel{
