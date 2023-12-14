@@ -3,6 +3,7 @@ package handler
 import (
 	"html/template"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -14,8 +15,11 @@ var tmplt *template.Template
 
 // https://www.makeuseof.com/go-html-templating/
 func NoTemplHandler(w http.ResponseWriter, r *http.Request) {
+	mydir, _ := os.Getwd()
+	println("dir", mydir)
+
 	formattedTime := time.Now().Format(time.RFC850)
-	tmplt, _ = template.ParseFiles("notempltest.html") // throwing them in public to see if it picks them up
+	tmplt, _ = template.ParseFiles("components/pages/notempl/notempl.html")
 	vm := NoTemplViewModel{
 		Time: formattedTime,
 	}
