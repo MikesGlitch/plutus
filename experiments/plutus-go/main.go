@@ -16,6 +16,11 @@ var tmplt *template.Template
 
 func main() {
 	mydir, _ := os.Getwd()
+	entries, _ := os.ReadDir(mydir)
+	for _, e := range entries {
+		fmt.Println(e.Name())
+	}
+
 	println("are we here?", mydir)
 	// Test harness - Vercel only reads the api directory so this should ideally point to that after spinning up
 	// This is wrong, it seems to be taking in all requests at this - need some work to make it fit with the vercel config
