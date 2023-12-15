@@ -1,5 +1,5 @@
 {{define "blanklayout"}}
-<html>
+<html class="h-full bg-white dark:bg-slate-700">
   <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/plutus.css" />
     <script src="https://unpkg.com/htmx.org@1.9.9"></script>
   </head>
-  <body>
+  <body class="font-sans antialiased text-gray-600 dark:text-white min-h-full flex flex-col">
     {{block "body" .}}{{end}}
   </body>
 </html>

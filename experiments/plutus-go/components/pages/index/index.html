@@ -1,20 +1,23 @@
-{{template "blanklayout" .}}
-
-{{define "body"}}
-<h1 class="text-3xl font-bold underline">Hello - from the server - Index page</h1>
-<p>Good example - https://github.com/biz/templates/blob/master/_examples/basic/templates/base.html</p>
-<div id="time-container">
-  {{template "partial_servertime" .}}
-</div>
-<button
-  class="bg-violet-500 hover:bg-violet-600 focus:outline-none focus:ring focus:ring-violet-300 active:bg-violet-700 px-5 py-2 text-sm leading-5 rounded-full font-semibold text-white"
-  hx-post="/api/partials/test"
-  hx-target="#time-container"
-  hx-swap="innerHTML"
->
-  Click Me
-</button>
-<div hx-boost="true">
-  {{template "link" (map "Href" "/about" "Text" "About")}}
+{{template "blanklayout" .}} {{define "body"}}
+<div class="max-w-8xl mx-auto px-4 sm:px-6 md:px-8">
+  <h1 class="text-3xl font-bold underline">
+    Hello - from the server - Index page
+  </h1>
+  <p>
+    Good example -
+    https://github.com/biz/templates/blob/master/_examples/basic/templates/base.html
+  </p>
+  <div id="time-container">{{template "partial_servertime" .}}</div>
+  <button
+    class="bg-violet-500 hover:bg-violet-600 focus:outline-none focus:ring focus:ring-violet-300 active:bg-violet-700 px-5 py-2 text-sm leading-5 rounded-full font-semibold text-white"
+    hx-post="/api/partials/test"
+    hx-target="#time-container"
+    hx-swap="innerHTML"
+  >
+    Click Me
+  </button>
+  <div hx-boost="true">
+    {{template "link" (map "Href" "/about" "Text" "About")}}
+  </div>
 </div>
 {{end}}
