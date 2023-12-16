@@ -1,5 +1,5 @@
 {{template "blanklayout" .}} {{define "body"}}
-<div class="max-w-8xl mx-auto px-4 sm:px-6 md:px-8">
+<div class="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 flex flex-col gap-2">
   <h1 class="text-3xl font-bold underline">
     Hello - from the server - Index page
   </h1>
@@ -7,6 +7,7 @@
     Good example -
     https://github.com/biz/templates/blob/master/_examples/basic/templates/base.html
   </p>
+  <h2 class="text-xl font-bold text-violet-500">HTMX partial swap</h2>
   <div id="time-container">{{template "partial_servertime" .}}</div>
   <button
     class="bg-violet-500 hover:bg-violet-600 focus:outline-none focus:ring focus:ring-violet-300 active:bg-violet-700 px-5 py-2 text-sm leading-5 rounded-full font-semibold text-white"
@@ -16,8 +17,21 @@
   >
     Click Me
   </button>
+
+  <h2 class="text-xl font-bold text-violet-500">Reusable link component</h2>
   <div hx-boost="true">
     {{template "link" (map "Href" "/about" "Text" "About")}}
+  </div>
+
+  <h2 class="text-xl font-bold text-violet-500">Loops</h2>
+  <div class="flex flex-col gap-1">
+    {{range .Items}}
+        <!-- . (dot) is: "Apple" (in 1st iteration)-->
+        <div>
+          Row ID is: {{.ID}} 
+          Value is: {{.Value}}
+        </div>
+    {{end}}    
   </div>
 </div>
 {{end}}

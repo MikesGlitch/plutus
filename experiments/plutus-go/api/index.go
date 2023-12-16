@@ -12,9 +12,15 @@ import (
 	"github.com/mikesglitch/plutus/utils"
 )
 
+type Item struct {
+	ID    string
+	Value string
+}
+
 type NoTemplViewModel struct {
 	Title string
 	Time  string
+	Items []Item
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
@@ -29,6 +35,16 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	vm := NoTemplViewModel{
 		Title: "Index page",
 		Time:  formattedTime,
+		Items: []Item{
+			Item{
+				ID:    "Test1",
+				Value: "Test 1 value",
+			},
+			Item{
+				ID:    "Test2",
+				Value: "Test 2 value",
+			},
+		},
 	}
 
 	err := page.ExecuteTemplate(w, "IndexPage", vm)
