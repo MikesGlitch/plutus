@@ -12,7 +12,7 @@ import (
 )
 
 func AboutHandler(w http.ResponseWriter, r *http.Request) {
-	var page = template.New("AboutPage").Funcs(utils.Funcs)
+	page := template.New("AboutPage").Funcs(utils.Funcs)
 	page.Parse(pages.AboutPageHtml)
 	page.Parse(layouts.BlankLayoutHtml)
 	page.Parse(common.ServerTimeHtml)

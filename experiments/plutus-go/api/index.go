@@ -24,7 +24,7 @@ type NoTemplViewModel struct {
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	var page = template.New("IndexPage").Funcs(utils.Funcs)
+	page := template.New("IndexPage").Funcs(utils.Funcs)
 	// I can probably set this up once for everything? Then just call it with a name? I'd like to say just call "indexPageHtml"
 	page.Parse(pages.IndexPageHtml)
 	page.Parse(layouts.BlankLayoutHtml)

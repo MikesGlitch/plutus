@@ -13,7 +13,7 @@ type TestPartialVm struct {
 }
 
 func TestPartialHandler(w http.ResponseWriter, r *http.Request) {
-	var page = template.New("partial_servertime")
+	page := template.New("partial_servertime")
 	page.Parse(common.ServerTimeHtml)
 
 	formattedTime := time.Now().Format(time.RFC850)
