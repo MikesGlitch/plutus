@@ -15,6 +15,8 @@ import (
 // I could also give templ another go
 // just make sure you need it - don't want to be beholden to it - there's only 1/2 active maintianers
 // https://templ.guide/
+// https://www.youtube.com/watch?v=EkK8Jxjj95s&t=2622s
+// Yeah, add templ back in. He makes good points about failing in runtime and it's faster. Also cleaner
 
 // Is there a startup file that can happen as a result of ALL function?
 // Otherwise I'm stuck embedding/making the templates on every handler
