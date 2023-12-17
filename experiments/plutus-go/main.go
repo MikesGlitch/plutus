@@ -11,6 +11,11 @@ import (
 	_ "modernc.org/sqlite"
 )
 
+// Notes: I could give this a go: https://echo.labstack.com/docs/templates
+// I could also give templ another go
+// just make sure you need it - don't want to be beholden to it - there's only 1/2 active maintianers
+// https://templ.guide/
+
 // Is there a startup file that can happen as a result of ALL function?
 // Otherwise I'm stuck embedding/making the templates on every handler
 // How much of a cost is it? It's happening at compile time right?
