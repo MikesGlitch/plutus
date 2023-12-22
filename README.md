@@ -14,6 +14,10 @@
 Do a really basic version of the monte carlo without any need for login etc. It should just let you enter your values and be done with it. Nice charts tho
 
 
+22/12/2023
+----------
+Experimenting with GoLang and templ for running a server only solution for an App. It's promising, but the Serverless delay of API calls causes the website to be slow unlike an offline capable app. It's the price you pay for having state only available on the backend. Could be workable especially if it's a local-first app, where the server is on the computer that's using it e.g. Desktop app. For hosted apps It's totally fine, it just means you're going to have to wait for the server - the upshot is you don't have to think about sync errors with offline sync.
+
 10/10/2022
 ----------
 Plan: Go with IndexedDB, and try to sync it with Google Drive.  Put a basic UI in place for monthly budgets - like a spreadsheet
