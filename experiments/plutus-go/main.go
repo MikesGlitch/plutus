@@ -21,6 +21,9 @@ import (
 // Is there a startup file that can happen as a result of ALL function?
 // Otherwise I'm stuck embedding/making the templates on every handler
 // How much of a cost is it? It's happening at compile time right?
+
+// Have a look at the official vercel bridge - https://github.com/vercel/go-bridge
+// Should mean I don't have to duplicate the register of the handlers
 func main() {
 	db, err := sql.Open("sqlite", "./data/plutus.db")
 	if err != nil {
@@ -35,7 +38,7 @@ func main() {
 		panic(err)
 	}
 
-	rows, err := db.Query("select 3*i from t order by i;")
+	rows, err := db.Query("select i from t order by i;")
 	if err != nil {
 		panic(err)
 	}
