@@ -1,5 +1,6 @@
 # plutus
 
+# Monte Carlo & Retirement planning app. I'd pay 30£ one off cost to use it forever. Build it in go and templ
 
 
 ## TODO
